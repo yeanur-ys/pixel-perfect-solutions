@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -44,7 +43,7 @@ const Hero = () => {
     // Create a soft, glowing material
     const particleMaterial = new THREE.PointsMaterial({
       size: 2,
-      color: 0x3b82f6, // Primary color (blue)
+      color: 0xffffff, // White particles
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending
@@ -111,7 +110,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden">
+    <div ref={containerRef} className="relative h-screen overflow-hidden bg-black"> {/* Added bg-black */}
       {/* Background Canvas */}
       <canvas 
         ref={canvasRef} 
@@ -141,7 +140,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6"
+            className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 text-white" // Added text-white
           >
             Transform Your <span className="text-primary">Digital Presence</span>
           </motion.h1>
@@ -150,7 +149,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl text-foreground/70 mb-10 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto" // Changed text-foreground/70 to text-gray-300
           >
             We craft cutting-edge solutions to elevate your business in the digital world, 
             from stunning websites to AI innovations and captivating graphics.
@@ -162,10 +161,10 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <a href="#web-development" className="button-primary">
+            <a href="#web-development" className="button-primary bg-primary text-white hover:bg-primary/90">
               Explore Services
             </a>
-            <a href="#contact" className="button-secondary">
+            <a href="#contact" className="button-secondary bg-transparent border border-primary text-primary hover:bg-primary/10">
               Contact Us
             </a>
           </motion.div>
@@ -179,8 +178,8 @@ const Hero = () => {
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
       >
-        <span className="text-sm text-foreground/60 mb-2">Scroll to explore</span>
-        <div className="w-[30px] h-[50px] rounded-full border-2 border-foreground/20 flex justify-center p-2">
+        <span className="text-sm text-gray-400 mb-2">Scroll to explore</span> {/* Changed text-foreground/60 to text-gray-400 */}
+        <div className="w-[30px] h-[50px] rounded-full border-2 border-gray-400 flex justify-center p-2"> {/* Changed border-foreground/20 to border-gray-400 */}
           <motion.div 
             animate={{ 
               y: [0, 15, 0],
