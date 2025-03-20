@@ -146,15 +146,27 @@
   }
 
   .loading-screen {
-    @apply fixed inset-0 bg-black flex items-center justify-center z-[9999];
+    @apply fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-950 to-black z-[9999];
   }
 
   .loading-container {
-    @apply flex flex-col items-center justify-center gap-4;
+    @apply p-8 rounded-xl bg-black/40 backdrop-blur-sm border border-gray-800 shadow-xl;
   }
 
-  .loading-logo {
-    @apply flex flex-col items-center gap-4;
+  .loading-logo-container {
+    @apply relative flex flex-col items-center justify-center;
+  }
+
+  .loading-progress-container {
+    @apply mt-8 w-full;
+  }
+
+  .loading-progress {
+    @apply bg-gray-800;
+  }
+
+  .loading-progress [role="progressbar"] {
+    @apply bg-gradient-to-r from-pink-500 to-rose-500;
   }
 
   .loading-text {
@@ -174,20 +186,13 @@
     animation: fill-animation 1s linear 1.5s forwards;
   }
 
-  .loading-spinner {
-    @apply mt-4;
+  .loading-particles {
+    @apply absolute inset-0 w-full h-full pointer-events-none;
   }
 
-  @keyframes stroke-animation {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes fill-animation {
-    to {
-      opacity: 1;
-    }
+  .loading-particle {
+    @apply absolute w-1.5 h-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500;
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.7);
   }
 
   .whatsapp-button {

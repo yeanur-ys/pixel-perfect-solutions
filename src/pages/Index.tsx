@@ -10,6 +10,8 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Chatbot from '@/components/Chatbot';
 import CursorEffect from '@/components/CursorEffect';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Progress } from '@/components/ui/progress';
 
 const maintenanceImages = [
   'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop',
@@ -37,14 +39,24 @@ const vfxImages = [
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [showWhatsApp, setShowWhatsApp] = useState(false);
   const phoneNumber = "8801797168842";
   const defaultMessage = "Hello! I'm interested in your services.";
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 10) + 1;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      }
+      setLoadingProgress(progress);
+    }, 200);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -69,7 +81,10 @@ const Index = () => {
       button.addEventListener('click', handleGetStarted);
     });
 
+    window.addEventListener('openWhatsApp', handleGetStarted);
+
     return () => {
+      clearInterval(interval);
       document.querySelectorAll('.slide-up, .scale-up, .slide-in-left, .slide-in-right').forEach((el) => {
         observer.unobserve(el);
       });
@@ -77,6 +92,8 @@ const Index = () => {
       document.querySelectorAll('.button-primary').forEach((button) => {
         button.removeEventListener('click', handleGetStarted);
       });
+      
+      window.removeEventListener('openWhatsApp', handleGetStarted);
     };
   }, []);
 
@@ -89,15 +106,70 @@ const Index = () => {
           exit={{ opacity: 0 }}
           className="loading-screen"
         >
-          <div className="loading-container">
-            <div className="loading-logo">
-              <svg viewBox="0 0 300 50" className="loading-text" width="300">
-                <text x="0" y="35" className="loading-text-stroke">EliteSiteCreation</text>
-                <text x="0" y="35" className="loading-text-fill">EliteSiteCreation</text>
-              </svg>
-              <div className="loading-spinner">
-                <Loader2 className="animate-spin h-10 w-10 text-primary" />
+          <div className="flex flex-col items-center justify-center h-full w-full">
+            <div className="loading-container max-w-md mx-auto text-center">
+              <div className="relative mb-8">
+                <div className="loading-logo-container">
+                  <svg viewBox="0 0 300 50" width="300" height="50" className="mx-auto">
+                    <text x="0" y="35" className="loading-text-stroke">
+                      EliteSiteCreation
+                    </text>
+                    <text x="0" y="35" className="loading-text-fill">
+                      EliteSiteCreation
+                    </text>
+                  </svg>
+                  
+                  <div className="loading-particles">
+                    {[...Array(20)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="loading-particle"
+                        animate={{
+                          x: [0, Math.random() * 100 - 50],
+                          y: [0, Math.random() * 100 - 50],
+                          opacity: [1, 0],
+                          scale: [1, 0],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: Math.random() * 2,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
+              
+              <div className="loading-progress-container">
+                <Progress value={loadingProgress} className="loading-progress h-2" />
+                <p className="mt-3 text-sm text-gray-400">Loading awesome experience... {loadingProgress}%</p>
+              </div>
+              
+              <div className="mt-8">
+                <motion.div 
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    repeatType: "reverse" 
+                  }}
+                  className="inline-block"
+                >
+                  <Loader2 className="animate-spin h-10 w-10 text-primary mx-auto" />
+                </motion.div>
+              </div>
+              
+              <motion.p
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="mt-6 text-sm text-gray-500"
+              >
+                Crafting digital excellence for you
+              </motion.p>
             </div>
           </div>
         </motion.div>
