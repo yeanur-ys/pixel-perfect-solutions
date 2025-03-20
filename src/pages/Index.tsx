@@ -20,7 +20,7 @@ const maintenanceImages = [
 ];
 
 const aiImages = [
-  'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop',
 ];
