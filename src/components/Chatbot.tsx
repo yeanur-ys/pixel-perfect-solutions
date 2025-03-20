@@ -147,7 +147,7 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="fixed bottom-5 w-14 h-14 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg z-50 cursor-pointer"
+        className="fixed bottom-0 w-24 h-24 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg z-50 cursor-pointer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
