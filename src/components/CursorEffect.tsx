@@ -50,29 +50,29 @@ const CursorEffect = () => {
 
   const variants = {
     default: {
-      x: mousePosition.x - 5, // Smaller size
-      y: mousePosition.y - 5,
+      x: mousePosition.x - 3, // Smaller size
+      y: mousePosition.y - 3,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 5,
-      y: mousePosition.y - 5,
-      scale: 1.2, // Less scale on hover
+      x: mousePosition.x - 3,
+      y: mousePosition.y - 3,
+      scale: 1.1, // Less scale on hover
       backgroundColor: "rgba(255, 64, 129, 0.6)" // Change to gradient color
     }
   };
 
   const outlineVariants = {
     default: {
-      x: mousePosition.x - 12, // Smaller outline
-      y: mousePosition.y - 12,
+      x: mousePosition.x - 8, // Smaller outline
+      y: mousePosition.y - 8,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 12,
-      y: mousePosition.y - 12,
-      scale: 1.5, // Less scale on hover
-      backgroundColor: "transparent",
+      x: mousePosition.x - 8,
+      y: mousePosition.y - 8,
+      scale: 1.3, // Less scale on hover
+      backgroundColor: "rgba(0, 0, 0, 0)", 
       borderColor: "rgba(255, 64, 129, 0.5)" // Match with primary color
     }
   };

@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Bot } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -66,6 +66,41 @@ const Chatbot = () => {
       return "Our office is located in Mirpur 1, Dhaka, Bangladesh. Feel free to visit us during business hours or schedule an appointment in advance.";
     }
     
+    // Timeline/Delivery
+    else if (lowerCaseMessage.includes('timeline') || lowerCaseMessage.includes('deadline') || lowerCaseMessage.includes('deliver') || lowerCaseMessage.includes('when')) {
+      return "Our typical delivery timeline depends on the project scope. Basic websites take about 1-2 weeks, advanced websites 3-4 weeks, and complex projects may take 5-8 weeks. We'll provide a detailed timeline after understanding your specific requirements.";
+    }
+    
+    // Process
+    else if (lowerCaseMessage.includes('process') || lowerCaseMessage.includes('workflow') || lowerCaseMessage.includes('steps')) {
+      return "Our development process involves: 1) Initial consultation, 2) Project planning and design mockups, 3) Development, 4) Testing and review, 5) Launch, and 6) Support and maintenance. We keep you involved throughout the entire process.";
+    }
+    
+    // Technology
+    else if (lowerCaseMessage.includes('tech') || lowerCaseMessage.includes('stack') || lowerCaseMessage.includes('platform')) {
+      return "We work with modern technology stacks including React, Vue, Angular for frontend, Node.js, Python, PHP for backend, and AWS, Google Cloud for hosting. We can recommend the best stack based on your project requirements.";
+    }
+    
+    // Portfolio
+    else if (lowerCaseMessage.includes('portfolio') || lowerCaseMessage.includes('example') || lowerCaseMessage.includes('work')) {
+      return "We have an extensive portfolio of websites, apps, and digital products across various industries. I'd be happy to arrange a personalized showcase of relevant projects for your industry. What type of business are you in?";
+    }
+    
+    // SEO
+    else if (lowerCaseMessage.includes('seo') || lowerCaseMessage.includes('search engine') || lowerCaseMessage.includes('ranking')) {
+      return "Our SEO services include keyword research, on-page optimization, technical SEO, and content strategy to improve your search engine rankings. We can include basic SEO in your website package or provide comprehensive SEO services separately.";
+    }
+    
+    // Greetings
+    else if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('hey')) {
+      return "Hello! Thanks for reaching out to EliteSiteCreation. How can I assist you with your digital needs today?";
+    }
+    
+    // Thank you
+    else if (lowerCaseMessage.includes('thank') || lowerCaseMessage.includes('thanks')) {
+      return "You're welcome! Is there anything else I can help with regarding our services?";
+    }
+    
     // Default response
     else {
       return "Thank you for your message! I'd be happy to help with your inquiry about our services. Could you provide more details about what you're looking for? We offer website development, AI & ML solutions, GFX/VFX design, and website maintenance.";
@@ -112,12 +147,12 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="fixed right-5 bottom-24 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg z-50 cursor-pointer"
+        className="fixed bottom-5 w-14 h-14 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg z-50 cursor-pointer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
       >
-        {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
+        {isOpen ? <X size={22} /> : <Bot size={22} />}
       </motion.div>
 
       {/* Chatbot Interface */}

@@ -133,12 +133,12 @@
   
   /* Custom Cursor */
   .cursor-dot {
-    @apply fixed top-0 left-0 w-2.5 h-2.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full pointer-events-none z-[9999] mix-blend-difference;
+    @apply fixed top-0 left-0 w-1.5 h-1.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full pointer-events-none z-[9999] mix-blend-difference;
     transform: translate(-50%, -50%);
   }
   
   .cursor-outline {
-    @apply fixed top-0 left-0 w-6 h-6 border-2 border-pink-500 rounded-full pointer-events-none z-[9998] mix-blend-difference;
+    @apply fixed top-0 left-0 w-4 h-4 border border-pink-500 rounded-full pointer-events-none z-[9998] mix-blend-difference;
     transform: translate(-50%, -50%);
   }
   
@@ -161,7 +161,7 @@
   }
   
   .loading-text {
-    @apply w-64 h-auto;
+    @apply w-full h-auto;
   }
   
   .loading-text-stroke {
@@ -196,13 +196,13 @@
 
 /* WhatsApp Button */
 .whatsapp-button {
-  @apply fixed right-5 bottom-5 w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg z-50
+  @apply w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg
          hover:scale-110 transition-transform duration-300 cursor-pointer;
 }
 
 /* WhatsApp Popup */
 .whatsapp-popup {
-  @apply fixed right-5 bottom-24 w-80 h-auto bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-300;
+  @apply fixed right-24 bottom-24 w-80 h-auto bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-300;
   border: 1px solid #333;
 }
 
