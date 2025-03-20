@@ -111,6 +111,18 @@ export default {
 				'cursor-blink': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0' }
+				},
+				'stroke-animation': {
+					'0%': { strokeDashoffset: '500' },
+					'100%': { strokeDashoffset: '0' }
+				},
+				'fill-animation': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'typing-dot': {
+					'0%, 80%, 100%': { transform: 'scale(0.6)', opacity: '0.6' },
+					'40%': { transform: 'scale(1)', opacity: '1' }
 				}
 			},
 			animation: {
@@ -126,7 +138,10 @@ export default {
 				'float': 'float 3s ease-in-out infinite',
 				'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
 				'spin-slow': 'spin-slow 15s linear infinite',
-				'cursor-blink': 'cursor-blink 1s ease-in-out infinite'
+				'cursor-blink': 'cursor-blink 1s ease-in-out infinite',
+				'stroke-animation': 'stroke-animation 2.5s linear forwards',
+				'fill-animation': 'fill-animation 1s linear 1.5s forwards',
+				'typing-dot': 'typing-dot 1.4s infinite ease-in-out both'
 			}
 		}
 	},
