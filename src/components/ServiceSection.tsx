@@ -24,6 +24,13 @@ const ServiceSection = ({
   const sectionRef = useRef<HTMLDivElement>(null);
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
   
+  // Function to open WhatsApp
+  const handleGetStarted = () => {
+    // This will trigger the event listener in the Index.tsx component
+    const event = new CustomEvent('openWhatsApp');
+    window.dispatchEvent(event);
+  };
+  
   return (
     <section id={id} className="py-24 px-4 md:px-6" ref={sectionRef}>
       <motion.h2 
@@ -69,6 +76,7 @@ const ServiceSection = ({
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="button-primary"
+            onClick={handleGetStarted}
           >
             Get Started
           </motion.button>

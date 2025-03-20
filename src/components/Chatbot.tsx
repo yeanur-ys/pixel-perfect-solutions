@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot } from 'lucide-react';
+import { X, Send, Bot } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -147,7 +147,7 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="fixed bottom-7 w-24 h-24 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg z-50 cursor-pointer"
+        className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
@@ -159,51 +159,57 @@ const Chatbot = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="chatbot-container"
+            className="fixed right-6 bottom-20 w-80 h-96 bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col"
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="chatbot-header">
+            <div className="bg-gradient-to-r from-pink-500 to-rose-500 p-4 text-white font-bold flex justify-between items-center">
               <span>EliteSiteCreation Support</span>
               <motion.div whileHover={{ rotate: 90 }} onClick={toggleChatbot}>
                 <X size={18} className="cursor-pointer" />
               </motion.div>
             </div>
 
-            <div className="chatbot-messages flex flex-col">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3">
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`chatbot-message ${message.sender}`}
+                  className={`p-3 rounded-xl max-w-[80%] ${
+                    message.sender === 'bot' 
+                      ? 'bg-gray-800 text-white rounded-bl-none self-start' 
+                      : 'bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-br-none self-end ml-auto'
+                  }`}
                 >
                   {message.text}
                 </div>
               ))}
               
               {isTyping && (
-                <div className="chatbot-message bot typing">
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
+                <div className="p-2 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[80%]">
+                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce"></span>
+                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
                 </div>
               )}
               
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="chatbot-input">
+            <div className="p-3 border-t border-gray-800 flex items-center gap-2">
               <input
                 type="text"
                 placeholder="Type your message..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
+                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-primary"
               />
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={handleSendMessage}
+                className="bg-gradient-to-r from-pink-500 to-rose-500 text-white p-2 rounded-lg hover:opacity-90 transition-colors"
               >
                 <Send size={18} />
               </motion.button>

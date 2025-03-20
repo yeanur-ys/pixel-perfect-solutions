@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Loader2, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
@@ -10,9 +10,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Chatbot from '@/components/Chatbot';
 import CursorEffect from '@/components/CursorEffect';
-import { Loader2 } from 'lucide-react';
 
-// Updated images for better topic relevance
 const maintenanceImages = [
   'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1573164713001-24066d7438c1?w=800&auto=format&fit=crop',
@@ -43,14 +41,11 @@ const Index = () => {
   const phoneNumber = "8801797168842";
   const defaultMessage = "Hello! I'm interested in your services.";
 
-  // Add smooth scroll behavior and loading effect
   useEffect(() => {
-    // Simulate loading
     setTimeout(() => {
       setLoading(false);
     }, 2500);
 
-    // Add intersection observer for animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -62,17 +57,14 @@ const Index = () => {
       { threshold: 0.15 }
     );
 
-    // Observe all elements with animation classes
     document.querySelectorAll('.slide-up, .scale-up, .slide-in-left, .slide-in-right').forEach((el) => {
       observer.observe(el);
     });
 
-    // Handle "Get Started" button clicks
     const handleGetStarted = () => {
       setShowWhatsApp(true);
     };
 
-    // Add event listeners to all "Get Started" buttons
     document.querySelectorAll('.button-primary').forEach((button) => {
       button.addEventListener('click', handleGetStarted);
     });
@@ -81,8 +73,7 @@ const Index = () => {
       document.querySelectorAll('.slide-up, .scale-up, .slide-in-left, .slide-in-right').forEach((el) => {
         observer.unobserve(el);
       });
-      
-      // Clean up event listeners
+
       document.querySelectorAll('.button-primary').forEach((button) => {
         button.removeEventListener('click', handleGetStarted);
       });
@@ -100,7 +91,7 @@ const Index = () => {
         >
           <div className="loading-container">
             <div className="loading-logo">
-              <svg viewBox="0 0 600 50" className="loading-text" width="600">
+              <svg viewBox="0 0 300 50" className="loading-text" width="300">
                 <text x="0" y="35" className="loading-text-stroke">EliteSiteCreation</text>
                 <text x="0" y="35" className="loading-text-fill">EliteSiteCreation</text>
               </svg>
@@ -161,20 +152,13 @@ const Index = () => {
           
           <Footer />
           
-          {/* WhatsApp Button with updated phone number */}
-          <div className="fixed right-24 bottom-5 z-50">
+          <div className="fixed bottom-6 right-6 flex items-center gap-4 z-50">
             <WhatsAppButton phoneNumber={phoneNumber} />
-          </div>
-          
-          {/* Chatbot Component */}
-          <div className="fixed right-5 bottom-5 z-50">
             <Chatbot />
           </div>
           
-          {/* Custom Cursor Effect */}
           <CursorEffect />
           
-          {/* WhatsApp Popup for Get Started */}
           <AnimatePresence>
             {showWhatsApp && (
               <motion.div

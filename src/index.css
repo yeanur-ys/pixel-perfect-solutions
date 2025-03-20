@@ -66,22 +66,18 @@
 }
 
 @layer components {
-  /* Hero Gradient */
   .hero-gradient {
     @apply absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-transparent opacity-90 z-10;
   }
 
-  /* Glass Card */
   .glass-card {
     @apply bg-black/20 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl;
   }
 
-  /* Section Title */
   .section-title {
     @apply text-4xl font-light tracking-tight mb-12 text-center text-white;
   }
 
-  /* Buttons */
   .button-primary {
     @apply px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-primary-foreground rounded-full
            transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-lg 
@@ -96,14 +92,12 @@
            focus:ring-offset-2 focus:ring-offset-black;
   }
 
-  /* Input Field */
   .input-field {
     @apply w-full px-4 py-3 rounded-lg border border-gray-800 bg-gray-900/50
            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
            transition-all duration-200 text-white;
   }
 
-  /* Animations */
   .slide-up {
     @apply opacity-0 translate-y-8 transition-all duration-700;
   }
@@ -136,7 +130,6 @@
     @apply opacity-100 translate-x-0;
   }
 
-  /* Custom Cursor */
   .cursor-dot {
     @apply fixed top-0 left-0 w-1.5 h-1.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full pointer-events-none z-[9999] mix-blend-difference;
     transform: translate(-50%, -50%);
@@ -152,7 +145,6 @@
     @apply transform scale-150 bg-white;
   }
 
-  /* Loading Screen */
   .loading-screen {
     @apply fixed inset-0 bg-black flex items-center justify-center z-[9999];
   }
@@ -198,13 +190,11 @@
     }
   }
 
-  /* WhatsApp Button */
   .whatsapp-button {
     @apply fixed bottom-6 right-6 w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg
            hover:scale-110 transition-transform duration-300 cursor-pointer z-50;
   }
 
-  /* WhatsApp Popup */
   .whatsapp-popup {
     @apply fixed right-6 bottom-20 w-80 h-auto bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-300;
     border: 1px solid #333;
@@ -222,7 +212,6 @@
     @apply p-3 border-t border-gray-800 flex items-center justify-end;
   }
 
-  /* Chatbot Container */
   .chatbot-container {
     @apply fixed right-6 bottom-28 w-80 h-96 bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-300 flex flex-col;
     border: 1px solid #333;
