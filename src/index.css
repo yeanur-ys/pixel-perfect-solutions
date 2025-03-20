@@ -5,23 +5,23 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 0%;
+    --foreground: 210 40% 98%;
     
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
     
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
     
     --primary: 212 100% 47%;
     --primary-foreground: 210 40% 98%;
     
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
     
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
     
     --accent: 199 89% 48%;
     --accent-foreground: 210 40% 98%;
@@ -29,45 +29,13 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222 47% 11%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212.7 26.8% 83.9%;
     
     --radius: 0.75rem;
   }
  
-  .dark {
-    --background: 20 14% 4%;
-    --foreground: 210 40% 98%;
-    
-    --card: 224 71% 4%;
-    --card-foreground: 210 40% 98%;
-    
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 40% 98%;
-    
-    --primary: 212 100% 47%;
-    --primary-foreground: 210 40% 98%;
-    
-    --secondary: 215 28% 17%;
-    --secondary-foreground: 210 40% 98%;
-    
-    --muted: 215 28% 17%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    
-    --accent: 199 89% 48%;
-    --accent-foreground: 210 40% 98%;
-    
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --border: 215 28% 17%;
-    --input: 215 28% 17%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }
@@ -77,12 +45,12 @@
   }
   
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-light tracking-tight;
+    @apply font-light tracking-tight text-white;
   }
   
   h1 {
@@ -100,35 +68,35 @@
 
 @layer components {
   .hero-gradient {
-    @apply absolute inset-0 bg-gradient-to-b from-background via-background to-transparent opacity-90 z-10;
+    @apply absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-transparent opacity-90 z-10;
   }
   
   .glass-card {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-xl;
+    @apply bg-black/20 backdrop-blur-md border border-white/5 rounded-2xl shadow-xl;
   }
   
   .section-title {
-    @apply text-4xl font-light tracking-tight mb-12 text-center;
+    @apply text-4xl font-light tracking-tight mb-12 text-center text-white;
   }
   
   .button-primary {
     @apply px-6 py-3 bg-primary text-primary-foreground rounded-full
            transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-lg 
            active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/50 
-           focus:ring-offset-2 focus:ring-offset-background;
+           focus:ring-offset-2 focus:ring-offset-black;
   }
   
   .button-secondary {
-    @apply px-6 py-3 bg-secondary text-secondary-foreground rounded-full
-           transition-all duration-300 ease-out hover:bg-secondary/80 hover:scale-[1.03]
-           active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-secondary/50
-           focus:ring-offset-2 focus:ring-offset-background;
+    @apply px-6 py-3 bg-gray-800 text-white rounded-full
+           transition-all duration-300 ease-out hover:bg-gray-700 hover:scale-[1.03]
+           active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/30
+           focus:ring-offset-2 focus:ring-offset-black;
   }
   
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-border bg-background/50
+    @apply w-full px-4 py-3 rounded-lg border border-gray-800 bg-gray-900/50
            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-           transition-all duration-200;
+           transition-all duration-200 text-white;
   }
   
   .slide-up {
@@ -162,4 +130,64 @@
   .slide-in-right.in-view {
     @apply opacity-100 translate-x-0;
   }
+  
+  /* Custom Cursor */
+  .cursor-dot {
+    @apply fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[9999] mix-blend-difference;
+    transform: translate(-50%, -50%);
+  }
+  
+  .cursor-outline {
+    @apply fixed top-0 left-0 w-8 h-8 border-2 border-primary rounded-full pointer-events-none z-[9998] mix-blend-difference;
+    transform: translate(-50%, -50%);
+  }
+  
+  .cursor-magnet:hover ~ .cursor-dot,
+  .cursor-magnet:hover ~ .cursor-outline {
+    @apply transform scale-150 bg-white;
+  }
+}
+
+/* WhatsApp Button */
+.whatsapp-button {
+  @apply fixed right-5 bottom-5 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg z-50
+         hover:scale-110 transition-transform duration-300 cursor-pointer;
+}
+
+/* Chatbot Container */
+.chatbot-container {
+  @apply fixed right-5 bottom-24 w-80 h-96 bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden transition-all duration-300 flex flex-col;
+  border: 1px solid #333;
+}
+
+.chatbot-header {
+  @apply bg-gray-800 p-4 text-white font-bold flex justify-between items-center;
+}
+
+.chatbot-messages {
+  @apply flex-1 p-4 overflow-y-auto space-y-3;
+}
+
+.chatbot-message {
+  @apply p-3 rounded-xl max-w-[80%];
+}
+
+.chatbot-message.bot {
+  @apply bg-gray-800 text-white rounded-bl-none self-start;
+}
+
+.chatbot-message.user {
+  @apply bg-primary text-white rounded-br-none self-end ml-auto;
+}
+
+.chatbot-input {
+  @apply p-3 border-t border-gray-800 flex items-center gap-2;
+}
+
+.chatbot-input input {
+  @apply bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-primary;
+}
+
+.chatbot-input button {
+  @apply bg-primary text-white p-2 rounded-lg hover:bg-primary/90 transition-colors;
 }

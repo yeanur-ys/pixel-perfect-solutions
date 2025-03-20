@@ -1,7 +1,7 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useScrollAnimation } from '@/lib/animations';
 
@@ -46,7 +46,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" ref={sectionRef} className="py-24 px-4 md:px-6">
+    <section id="contact" ref={sectionRef} className="py-24 px-4 md:px-6 bg-black">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,10 +57,10 @@ const ContactSection = () => {
           <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
             Get In Touch
           </span>
-          <h2 className="text-3xl md:text-4xl font-light mb-6">
+          <h2 className="text-3xl md:text-4xl font-light mb-6 text-white">
             Let's Start a Conversation
           </h2>
-          <p className="text-foreground/70 max-w-3xl mx-auto text-lg">
+          <p className="text-gray-400 max-w-3xl mx-auto text-lg">
             Have a project in mind? We'd love to hear from you. Fill out the form below 
             and we'll get back to you as soon as possible.
           </p>
@@ -75,7 +75,7 @@ const ContactSection = () => {
           >
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-300">
                   Your Name
                 </label>
                 <input
@@ -85,13 +85,13 @@ const ContactSection = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="input-field"
+                  className="input-field bg-gray-900 border-gray-700 text-gray-200"
                   placeholder="John Doe"
                 />
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-300">
                   Email Address
                 </label>
                 <input
@@ -101,13 +101,13 @@ const ContactSection = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="input-field"
+                  className="input-field bg-gray-900 border-gray-700 text-gray-200"
                   placeholder="john@example.com"
                 />
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-300">
                   Your Message
                 </label>
                 <textarea
@@ -117,7 +117,7 @@ const ContactSection = () => {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  className="input-field resize-none"
+                  className="input-field resize-none bg-gray-900 border-gray-700 text-gray-200"
                   placeholder="Tell us about your project..."
                 />
               </div>
@@ -133,7 +133,7 @@ const ContactSection = () => {
                   <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    Send Message <send className="ml-2 h-4 w-4" />
+                    Send Message <Send className="ml-2 h-4 w-4" />
                   </>
                 )}
               </motion.button>

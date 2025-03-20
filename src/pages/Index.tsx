@@ -7,6 +7,9 @@ import Services from '@/components/Services';
 import ServiceSection from '@/components/ServiceSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import WhatsAppButton from '@/components/WhatsAppButton';
+import Chatbot from '@/components/Chatbot';
+import CursorEffect from '@/components/CursorEffect';
 
 // Mock image imports (using placeholder images)
 const maintenanceImages = [
@@ -67,7 +70,7 @@ const Index = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen bg-background text-foreground overflow-hidden"
+        className="min-h-screen bg-black text-foreground overflow-hidden"
       >
         <Navbar />
         <Hero />
@@ -111,6 +114,15 @@ const Index = () => {
         <ContactSection />
         
         <Footer />
+        
+        {/* WhatsApp Button - Replace with your actual phone number */}
+        <WhatsAppButton phoneNumber="1234567890" />
+        
+        {/* Chatbot Component */}
+        <Chatbot />
+        
+        {/* Custom Cursor Effect */}
+        <CursorEffect />
       </motion.div>
     </AnimatePresence>
   );

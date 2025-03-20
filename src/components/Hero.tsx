@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -6,6 +7,7 @@ const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -40,10 +42,10 @@ const Hero = () => {
     
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
-    // Create a soft, glowing material
+    // Create a soft, glowing material with a blue/purple color palette
     const particleMaterial = new THREE.PointsMaterial({
-      size: 2,
-      color: 0xffffff, // White particles
+      size: 2.5,
+      color: 0x4169e1,
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending
@@ -68,6 +70,9 @@ const Hero = () => {
     const handleMouseMove = (event: MouseEvent) => {
       mouseX = (event.clientX - windowHalfX) * 0.5;
       mouseY = (event.clientY - windowHalfY) * 0.5;
+      
+      // Update state for custom cursor
+      setMousePosition({ x: event.clientX, y: event.clientY });
     };
     
     window.addEventListener('mousemove', handleMouseMove);
@@ -110,12 +115,42 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden bg-black"> {/* Added bg-black */}
+    <div ref={containerRef} className="relative h-screen overflow-hidden bg-black">
       {/* Background Canvas */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full -z-10"
       />
+      
+      {/* Custom Cursor (only shown on desktop) */}
+      <div className="hidden md:block">
+        <motion.div
+          className="cursor-dot"
+          animate={{
+            x: mousePosition.x,
+            y: mousePosition.y,
+          }}
+          transition={{
+            type: "spring",
+            damping: 25,
+            stiffness: 300,
+            mass: 0.5
+          }}
+        />
+        <motion.div
+          className="cursor-outline"
+          animate={{
+            x: mousePosition.x,
+            y: mousePosition.y,
+          }}
+          transition={{
+            type: "spring",
+            damping: 40,
+            stiffness: 250,
+            mass: 0.8
+          }}
+        />
+      </div>
       
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 md:px-8">
@@ -131,7 +166,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.1 }}
-            className="inline-block px-4 py-1.5 mb-6 text-sm font-medium rounded-full bg-primary/10 text-primary"
+            className="inline-block px-4 py-1.5 mb-6 text-sm font-medium rounded-full bg-primary/10 text-primary cursor-magnet"
           >
             Digital Excellence
           </motion.span>
@@ -140,7 +175,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 text-white" // Added text-white
+            className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 text-white cursor-magnet"
           >
             Transform Your <span className="text-primary">Digital Presence</span>
           </motion.h1>
@@ -149,7 +184,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto" // Changed text-foreground/70 to text-gray-300
+            className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto"
           >
             We craft cutting-edge solutions to elevate your business in the digital world, 
             from stunning websites to AI innovations and captivating graphics.
@@ -161,12 +196,22 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <a href="#web-development" className="button-primary bg-primary text-white hover:bg-primary/90">
+            <motion.a 
+              href="#web-development" 
+              className="button-primary cursor-magnet"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Explore Services
-            </a>
-            <a href="#contact" className="button-secondary bg-transparent border border-primary text-primary hover:bg-primary/10">
+            </motion.a>
+            <motion.a 
+              href="#contact" 
+              className="button-secondary cursor-magnet"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Contact Us
-            </a>
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
@@ -176,10 +221,10 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-magnet"
       >
-        <span className="text-sm text-gray-400 mb-2">Scroll to explore</span> {/* Changed text-foreground/60 to text-gray-400 */}
-        <div className="w-[30px] h-[50px] rounded-full border-2 border-gray-400 flex justify-center p-2"> {/* Changed border-foreground/20 to border-gray-400 */}
+        <span className="text-sm text-gray-400 mb-2">Scroll to explore</span>
+        <div className="w-[30px] h-[50px] rounded-full border-2 border-gray-700 flex justify-center p-2">
           <motion.div 
             animate={{ 
               y: [0, 15, 0],
