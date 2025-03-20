@@ -51,9 +51,9 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-medium mb-4">Contact</h3>
             <ul className="space-y-3 text-foreground/70">
-              <li>Melbourne, Australia</li>
-              <li>contact@elitesitecreation.com</li>
-              <li>+1 (555) 123-4567</li>
+              <li>Mirpur 1, Dhaka, Bangladesh.</li>
+              <li>support@elitesitecreation.com</li>
+              <li>+8801797168842</li>
             </ul>
           </div>
         </div>
