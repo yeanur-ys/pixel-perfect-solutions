@@ -20,9 +20,9 @@ const maintenanceImages = [
 ];
 
 const aiImages = [
-  'https://images.unsplash.com/photo-1677442135136-760c813270c2?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1675271591201-7e8f4ff8b3d7?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1701457592825-a4c1d1571006?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop',
 ];
 
 const gfxImages = [
