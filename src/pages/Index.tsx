@@ -14,8 +14,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Progress } from '@/components/ui/progress';
 
 const maintenanceImages = [
-  'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1573164713001-24066d7438c1?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&auto=format&fit=crop',
 ];
 
@@ -27,8 +27,8 @@ const aiImages = [
 
 const gfxImages = [
   'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=800&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=800&auto=format&fit=crop',
 ];
 
 const vfxImages = [
