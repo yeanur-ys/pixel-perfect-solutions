@@ -42,7 +42,7 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showWhatsApp, setShowWhatsApp] = useState(false);
-  const phoneNumber = "8801797168842";
+  const phoneNumber = "8801640063079";
   const defaultMessage = "Hello! I'm interested in your services.";
 
   useEffect(() => {
