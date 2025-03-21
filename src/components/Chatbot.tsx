@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Bot } from 'lucide-react';
@@ -9,13 +8,19 @@ interface Message {
   sender: 'bot' | 'user';
 }
 
+interface QuickReply {
+  text: string;
+  action: () => void;
+}
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "Hi there! 👋 I'm the EliteSiteCreation assistant. How can I help you today?", sender: 'bot' }
+    { id: 1, text: "Hi there! 👋 I'm the EliteSiteCreation assistant. How can I help you today?", sender: 'bot' },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [context, setContext] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages come in
@@ -27,84 +32,100 @@ const Chatbot = () => {
     setIsOpen(!isOpen);
   };
 
-  // Advanced responses based on keywords
+  // Advanced responses based on keywords and context
   const getBotResponse = (userMessage: string): string => {
     const lowerCaseMessage = userMessage.toLowerCase();
-    
-    // Website Development
+
+    // Contextual responses
+    if (context === 'website_package') {
+      setContext(null); // Reset context after response
+      return "Our Basic Website package includes responsive design, SEO optimization, and 3 pages. The Advanced package includes up to 10 pages and custom features. Would you like to know more?";
+    }
+
+    if (context === 'contact_info') {
+      setContext(null);
+      return "You can reach us via email at support@elitesitecreation.com or WhatsApp at +8801797168842. How else can I assist you?";
+    }
+
+    if (context === 'ml_ai_design') {
+      setContext(null);
+      return "Our ML & AI solutions include custom AI models, data analysis, and automation tools. We can help you build intelligent systems tailored to your business needs. Would you like to schedule a consultation?";
+    }
+
+    if (context === 'gfx_design') {
+      setContext(null);
+      return "We offer high-quality GFX design services, including logos, banners, and branding materials. Our designs are tailored to your brand identity. Would you like to see some examples?";
+    }
+
+    if (context === 'vfx_design') {
+      setContext(null);
+      return "Our VFX design services include video editing, motion graphics, and visual effects for videos. We can enhance your visual content to make it more engaging. Would you like to discuss a project?";
+    }
+
+    // Keyword-based responses
     if (lowerCaseMessage.includes('website') || lowerCaseMessage.includes('web development') || lowerCaseMessage.includes('site')) {
-      return "We offer professional website development services starting from $999. Our packages include responsive design, SEO optimization, and ongoing support. Would you like to know more about our specific packages?";
+      setContext('website_package');
+      return "We offer professional website development services starting from $999. Would you like to know more about our packages?";
     }
-    
-    // Pricing
-    else if (lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost') || lowerCaseMessage.includes('package')) {
-      return "We have several pricing options: Basic Website ($999), Advanced Website ($1999), and Premium Website ($2999). Each package includes different features. Would you like me to elaborate on any specific package?";
+
+    if (lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost') || lowerCaseMessage.includes('package')) {
+      return "Our pricing starts at $999 for a Basic Website, $1999 for Advanced, and $2999 for Premium. Each package includes different features. Would you like details on a specific package?";
     }
-    
-    // Contact
-    else if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('reach') || lowerCaseMessage.includes('talk')) {
-      return "You can reach us through email at support@elitesitecreation.com or via WhatsApp at +8801797168842. Alternatively, you can fill out the contact form on our website.";
+
+    if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('reach') || lowerCaseMessage.includes('talk')) {
+      setContext('contact_info');
+      return "You can contact us via email or WhatsApp. Would you like our contact details?";
     }
-    
-    // AI & ML
-    else if (lowerCaseMessage.includes('ai') || lowerCaseMessage.includes('ml') || lowerCaseMessage.includes('artificial intelligence') || lowerCaseMessage.includes('machine learning')) {
-      return "Our AI & ML solutions help businesses automate processes, gain insights from data, and enhance decision-making. We customize solutions based on your specific needs. Would you like to schedule a consultation?";
+
+    if (lowerCaseMessage.includes('ml') || lowerCaseMessage.includes('ai') || lowerCaseMessage.includes('machine learning') || lowerCaseMessage.includes('artificial intelligence')) {
+      setContext('ml_ai_design');
+      return "We specialize in ML & AI solutions, including custom AI models and data analysis. Would you like to know more about our services?";
     }
-    
-    // GFX & VFX
-    else if (lowerCaseMessage.includes('gfx') || lowerCaseMessage.includes('vfx') || lowerCaseMessage.includes('graphics') || lowerCaseMessage.includes('visual')) {
-      return "We provide high-quality GFX and VFX services to enhance your visual content. Our team creates stunning visuals tailored to your brand identity. Would you like to see some examples of our work?";
+
+    if (lowerCaseMessage.includes('gfx') || lowerCaseMessage.includes('graphics') || lowerCaseMessage.includes('design')) {
+      setContext('gfx_design');
+      return "We offer professional GFX design services, including logos, banners, and branding materials. Would you like to see some examples?";
     }
-    
-    // Maintenance
-    else if (lowerCaseMessage.includes('maintenance') || lowerCaseMessage.includes('update') || lowerCaseMessage.includes('support')) {
-      return "Our website maintenance services ensure your site stays secure, updated, and optimized. We offer regular updates, security monitoring, content management, and performance optimization. Would you like to learn more about our maintenance packages?";
+
+    if (lowerCaseMessage.includes('vfx') || lowerCaseMessage.includes('visual effects') || lowerCaseMessage.includes('motion graphics')) {
+      setContext('vfx_design');
+      return "Our VFX design services include video editing, motion graphics, and visual effects. Would you like to discuss a project?";
     }
-    
-    // Location
-    else if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('office') || lowerCaseMessage.includes('where')) {
+
+    if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('office') || lowerCaseMessage.includes('where')) {
       return "Our office is located in Mirpur 1, Dhaka, Bangladesh. Feel free to visit us during business hours or schedule an appointment in advance.";
     }
-    
-    // Timeline/Delivery
-    else if (lowerCaseMessage.includes('timeline') || lowerCaseMessage.includes('deadline') || lowerCaseMessage.includes('deliver') || lowerCaseMessage.includes('when')) {
-      return "Our typical delivery timeline depends on the project scope. Basic websites take about 1-2 weeks, advanced websites 3-4 weeks, and complex projects may take 5-8 weeks. We'll provide a detailed timeline after understanding your specific requirements.";
+
+    if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('hey')) {
+      return "Hello! How can I assist you today?";
     }
-    
-    // Process
-    else if (lowerCaseMessage.includes('process') || lowerCaseMessage.includes('workflow') || lowerCaseMessage.includes('steps')) {
-      return "Our development process involves: 1) Initial consultation, 2) Project planning and design mockups, 3) Development, 4) Testing and review, 5) Launch, and 6) Support and maintenance. We keep you involved throughout the entire process.";
+
+    if (lowerCaseMessage.includes('thank') || lowerCaseMessage.includes('thanks')) {
+      return "You're welcome! Is there anything else I can help with?";
     }
-    
-    // Technology
-    else if (lowerCaseMessage.includes('tech') || lowerCaseMessage.includes('stack') || lowerCaseMessage.includes('platform')) {
-      return "We work with modern technology stacks including React, Vue, Angular for frontend, Node.js, Python, PHP for backend, and AWS, Google Cloud for hosting. We can recommend the best stack based on your project requirements.";
-    }
-    
-    // Portfolio
-    else if (lowerCaseMessage.includes('portfolio') || lowerCaseMessage.includes('example') || lowerCaseMessage.includes('work')) {
-      return "We have an extensive portfolio of websites, apps, and digital products across various industries. I'd be happy to arrange a personalized showcase of relevant projects for your industry. What type of business are you in?";
-    }
-    
-    // SEO
-    else if (lowerCaseMessage.includes('seo') || lowerCaseMessage.includes('search engine') || lowerCaseMessage.includes('ranking')) {
-      return "Our SEO services include keyword research, on-page optimization, technical SEO, and content strategy to improve your search engine rankings. We can include basic SEO in your website package or provide comprehensive SEO services separately.";
-    }
-    
-    // Greetings
-    else if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('hey')) {
-      return "Hello! Thanks for reaching out to EliteSiteCreation. How can I assist you with your digital needs today?";
-    }
-    
-    // Thank you
-    else if (lowerCaseMessage.includes('thank') || lowerCaseMessage.includes('thanks')) {
-      return "You're welcome! Is there anything else I can help with regarding our services?";
-    }
-    
-    // Default response
-    else {
-      return "Thank you for your message! I'd be happy to help with your inquiry about our services. Could you provide more details about what you're looking for? We offer website development, AI & ML solutions, GFX/VFX design, and website maintenance.";
-    }
+
+    // Default response for unclear queries
+    return "I'm not sure I understand. Could you clarify? For example, are you asking about our website packages, ML & AI solutions, GFX/VFX design, or contact info?";
+  };
+
+  // Quick replies for common questions
+  const quickReplies: QuickReply[] = [
+    { text: "Website Packages", action: () => handleQuickReply('website') },
+    { text: "ML & AI Solutions", action: () => handleQuickReply('ml') },
+    { text: "GFX Design", action: () => handleQuickReply('gfx') },
+    { text: "VFX Design", action: () => handleQuickReply('vfx') },
+    { text: "Contact Info", action: () => handleQuickReply('contact') },
+    { text: "Location", action: () => handleQuickReply('location') },
+  ];
+
+  const handleQuickReply = (type: string) => {
+    const response = getBotResponse(type);
+    const newBotMessage: Message = {
+      id: messages.length + 1,
+      text: response,
+      sender: 'bot',
+    };
+    setMessages((prev) => [...prev, newBotMessage]);
   };
 
   const handleSendMessage = () => {
@@ -114,26 +135,24 @@ const Chatbot = () => {
     const newUserMessage: Message = {
       id: messages.length + 1,
       text: inputMessage,
-      sender: 'user'
+      sender: 'user',
     };
-    setMessages(prev => [...prev, newUserMessage]);
+    setMessages((prev) => [...prev, newUserMessage]);
     setInputMessage('');
-    
+
     // Show typing indicator
     setIsTyping(true);
 
     // Simulate bot response after a short delay
     setTimeout(() => {
       const botResponse = getBotResponse(inputMessage);
-      
       const newBotMessage: Message = {
         id: messages.length + 2,
         text: botResponse,
-        sender: 'bot'
+        sender: 'bot',
       };
-      
       setIsTyping(false);
-      setMessages(prev => [...prev, newBotMessage]);
+      setMessages((prev) => [...prev, newBotMessage]);
     }, 1500);
   };
 
@@ -177,15 +196,15 @@ const Chatbot = () => {
                 <div
                   key={message.id}
                   className={`p-3 rounded-xl max-w-[80%] ${
-                    message.sender === 'bot' 
-                      ? 'bg-gray-800 text-white rounded-bl-none self-start' 
+                    message.sender === 'bot'
+                      ? 'bg-gray-800 text-white rounded-bl-none self-start'
                       : 'bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-br-none self-end ml-auto'
                   }`}
                 >
                   {message.text}
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="p-2 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[80%]">
                   <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce"></span>
@@ -193,7 +212,20 @@ const Chatbot = () => {
                   <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
                 </div>
               )}
-              
+
+              {/* Quick Replies */}
+              <div className="flex gap-2 mt-2">
+                {quickReplies.map((reply, index) => (
+                  <button
+                    key={index}
+                    onClick={reply.action}
+                    className="bg-gray-800 text-white px-3 py-1 rounded-lg hover:bg-gray-700"
+                  >
+                    {reply.text}
+                  </button>
+                ))}
+              </div>
+
               <div ref={messagesEndRef} />
             </div>
 
