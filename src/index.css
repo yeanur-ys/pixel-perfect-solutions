@@ -1,10 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
+    --background: 221 70% 15%;
     --foreground: 210 40% 98%;
     
     --card: 222 47% 11%;
@@ -13,7 +14,7 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
     
-    --primary: 346 83% 61%;
+    --primary: 221 70% 55%;
     --primary-foreground: 210 40% 98%;
     
     --secondary: 217 33% 17%;
@@ -22,7 +23,7 @@
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
     
-    --accent: 339 89% 58%;
+    --accent: 221 70% 45%;
     --accent-foreground: 210 40% 98%;
     
     --destructive: 0 84.2% 60.2%;
@@ -44,8 +45,9 @@
   }
 
   body {
-    @apply bg-black text-foreground;
+    @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: linear-gradient(135deg, hsl(221, 70%, 10%), hsl(220, 70%, 20%));
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -67,7 +69,7 @@
 
 @layer components {
   .hero-gradient {
-    @apply absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-transparent opacity-90 z-10;
+    @apply absolute inset-0 bg-gradient-to-b from-background via-gray-900 to-transparent opacity-90 z-10;
   }
 
   .glass-card {
@@ -79,7 +81,7 @@
   }
 
   .button-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-primary-foreground rounded-full
+    @apply px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-primary-foreground rounded-full
            transition-all duration-300 ease-out hover:scale-[1.03] hover:shadow-lg 
            active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/50 
            focus:ring-offset-2 focus:ring-offset-black;
@@ -131,12 +133,12 @@
   }
 
   .cursor-dot {
-    @apply fixed top-0 left-0 w-1 h-1 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full pointer-events-none z-[9999] mix-blend-difference;
+    @apply fixed top-0 left-0 w-0.5 h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full pointer-events-none z-[9999] mix-blend-difference;
     transform: translate(-50%, -50%);
   }
 
   .cursor-outline {
-    @apply fixed top-0 left-0 w-3 h-3 border border-pink-500 rounded-full pointer-events-none z-[9998] mix-blend-difference;
+    @apply fixed top-0 left-0 w-2 h-2 border border-blue-400 rounded-full pointer-events-none z-[9998] mix-blend-difference;
     transform: translate(-50%, -50%);
   }
 
@@ -146,45 +148,44 @@
   }
 
   .loading-screen {
-    @apply fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-950 to-black z-[9999];
+    @apply fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-950 to-blue-900 z-[9999];
   }
 
   .loading-container {
-    @apply p-8 rounded-xl bg-black/40 backdrop-blur-sm border border-primary/20 shadow-xl max-w-md w-full;
+    @apply flex flex-col items-center justify-center h-full w-full max-w-md mx-auto;
   }
 
-  .loading-logo-container {
-    @apply relative flex flex-col items-center justify-center;
+  .loading-circle {
+    @apply relative flex flex-col items-center justify-center w-48 h-48 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 shadow-lg mb-6;
   }
 
-  .loading-progress-container {
-    @apply mt-8 w-full;
+  .loading-circle::before {
+    content: '';
+    @apply absolute inset-1 rounded-full bg-blue-900;
   }
 
-  .loading-progress {
-    @apply bg-gray-900;
+  .loading-circle-inner {
+    @apply relative z-10 flex flex-col items-center justify-center;
   }
 
-  .loading-progress [role="progressbar"] {
-    @apply bg-gradient-to-r from-pink-500 to-rose-500;
+  .loading-logo {
+    @apply text-4xl font-bold text-white mb-1;
   }
 
   .loading-text {
-    @apply w-full h-auto text-center;
+    @apply text-white text-lg font-light;
   }
 
-  .loading-text-stroke {
-    @apply fill-none stroke-primary font-bold text-2xl md:text-3xl;
-    stroke-width: 2px;
-    stroke-dasharray: 550;
-    stroke-dashoffset: 550;
-    animation: stroke-animation 2.5s linear forwards;
+  .loading-progress-container {
+    @apply mt-8 w-full max-w-xs;
   }
 
-  .loading-text-fill {
-    @apply fill-primary font-bold text-2xl md:text-3xl;
-    opacity: 0;
-    animation: fill-animation 1s linear 1.5s forwards;
+  .loading-progress {
+    @apply bg-blue-900/50;
+  }
+
+  .loading-progress [role="progressbar"] {
+    @apply bg-gradient-to-r from-blue-400 to-blue-600;
   }
 
   .loading-particles {
@@ -192,8 +193,8 @@
   }
 
   .loading-particle {
-    @apply absolute w-1 h-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500;
-    box-shadow: 0 0 8px rgba(236, 72, 153, 0.7);
+    @apply absolute w-1 h-1 rounded-full bg-gradient-to-r from-blue-400 to-blue-600;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
   }
 
   .whatsapp-button {
@@ -224,7 +225,7 @@
   }
 
   .chatbot-header {
-    @apply bg-gradient-to-r from-pink-500 to-rose-500 p-4 text-white font-bold flex justify-between items-center;
+    @apply bg-gradient-to-r from-blue-600 to-blue-400 p-4 text-white font-bold flex justify-between items-center;
   }
 
   .chatbot-messages {
@@ -240,7 +241,7 @@
   }
 
   .chatbot-message.user {
-    @apply bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-br-none self-end ml-auto;
+    @apply bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-br-none self-end ml-auto;
   }
 
   .chatbot-message.typing {
@@ -284,7 +285,7 @@
   }
 
   .chatbot-input button {
-    @apply bg-gradient-to-r from-pink-500 to-rose-500 text-white p-2 rounded-lg hover:opacity-90 transition-colors;
+    @apply bg-gradient-to-r from-blue-600 to-blue-400 text-white p-2 rounded-lg hover:opacity-90 transition-colors;
   }
 
   @keyframes stroke-animation {
@@ -327,10 +328,19 @@
 
   @keyframes glow-animation {
     0%, 100% {
-      filter: drop-shadow(0 0 5px rgba(236, 72, 153, 0.5));
+      filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));
     }
     50% {
-      filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.8));
+      filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8));
+    }
+  }
+
+  @keyframes rotate-animation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 }

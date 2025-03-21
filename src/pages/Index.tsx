@@ -98,88 +98,103 @@ const Index = () => {
           exit={{ opacity: 0 }}
           className="loading-screen"
         >
-          <div className="flex flex-col items-center justify-center h-full w-full">
-            <div className="loading-container">
-              <motion.div 
-                className="loading-logo-container"
-                animate={{ 
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity,
-                  repeatType: "reverse" 
-                }}
-              >
-                <svg viewBox="0 0 300 50" width="300" height="50" className="mx-auto">
-                  <text x="15" y="35" className="loading-text-stroke">
-                    EliteSiteCreation
-                  </text>
-                  <text x="15" y="35" className="loading-text-fill">
-                    EliteSiteCreation
-                  </text>
-                </svg>
-                
-                <div className="loading-particles">
-                  {[...Array(30)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="loading-particle"
-                      initial={{ 
-                        x: 150,
-                        y: 25, 
-                        opacity: 0,
-                        scale: 0
-                      }}
-                      animate={{
-                        x: 150 + Math.cos(i * (Math.PI * 2 / 30)) * (80 + Math.random() * 20),
-                        y: 25 + Math.sin(i * (Math.PI * 2 / 30)) * (80 + Math.random() * 20),
-                        opacity: [0, 1, 0],
-                        scale: [0, 1.5, 0],
-                      }}
-                      transition={{
-                        duration: 2 + Math.random() * 2,
-                        repeat: Infinity,
-                        delay: i * 0.1,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-              
-              <div className="loading-progress-container mt-12">
-                <Progress value={loadingProgress} className="loading-progress h-2" />
-                <p className="mt-3 text-sm text-center text-gray-400">Loading awesome experience... {loadingProgress}%</p>
-              </div>
-              
-              <div className="mt-10 flex justify-center">
-                <motion.div 
-                  animate={{ 
-                    rotate: 360,
-                    filter: [
-                      "drop-shadow(0 0 5px rgba(236, 72, 153, 0.5))",
-                      "drop-shadow(0 0 15px rgba(236, 72, 153, 0.8))",
-                      "drop-shadow(0 0 5px rgba(236, 72, 153, 0.5))"
-                    ]
+          <div className="loading-container">
+            <motion.div 
+              className="loading-circle"
+              animate={{ 
+                rotate: 360
+              }}
+              transition={{ 
+                duration: 20, 
+                repeat: Infinity,
+                ease: "linear" 
+              }}
+            >
+              <div className="loading-circle-inner">
+                <motion.div
+                  className="loading-logo"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.9, 1, 0.9]
                   }}
-                  transition={{ 
-                    rotate: { duration: 3, repeat: Infinity, ease: "linear" },
-                    filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse"
                   }}
-                  className="inline-block"
                 >
-                  <Loader2 className="h-8 w-8 text-primary mx-auto" />
+                  ESC
                 </motion.div>
               </div>
-              
-              <motion.p
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="mt-6 text-sm text-center text-gray-500"
+            </motion.div>
+            
+            <motion.h2
+              className="loading-text text-center mb-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              Elite Site Creation
+            </motion.h2>
+            
+            <div className="loading-progress-container">
+              <Progress value={loadingProgress} className="loading-progress h-2" />
+              <p className="mt-3 text-sm text-center text-blue-200">Loading experience... {loadingProgress}%</p>
+            </div>
+            
+            <div className="mt-10 flex justify-center">
+              <motion.div 
+                animate={{ 
+                  rotate: 360,
+                  filter: [
+                    "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))",
+                    "drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))",
+                    "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))"
+                  ]
+                }}
+                transition={{ 
+                  rotate: { duration: 3, repeat: Infinity, ease: "linear" },
+                  filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                }}
+                className="inline-block"
               >
-                Crafting digital excellence for you
-              </motion.p>
+                <Loader2 className="h-8 w-8 text-blue-400 mx-auto" />
+              </motion.div>
+            </div>
+            
+            <motion.p
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="mt-6 text-sm text-center text-blue-300"
+            >
+              Crafting digital excellence for you
+            </motion.p>
+            
+            <div className="loading-particles">
+              {[...Array(30)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="loading-particle"
+                  initial={{ 
+                    x: '50%',
+                    y: '50%', 
+                    opacity: 0,
+                    scale: 0
+                  }}
+                  animate={{
+                    x: `calc(50% + ${Math.cos(i * (Math.PI * 2 / 30)) * (100 + Math.random() * 50)}px)`,
+                    y: `calc(50% + ${Math.sin(i * (Math.PI * 2 / 30)) * (100 + Math.random() * 50)}px)`,
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                  }}
+                  transition={{
+                    duration: 2 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
             </div>
           </div>
         </motion.div>
@@ -189,7 +204,7 @@ const Index = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="min-h-screen bg-black text-foreground overflow-hidden"
+          className="min-h-screen bg-gradient-to-br from-blue-950 to-blue-900 text-foreground overflow-hidden"
         >
           <Navbar />
           <Hero />
@@ -257,7 +272,7 @@ const Index = () => {
                   exit={{ scale: 0.9, y: 20 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="p-4 bg-gradient-to-r from-pink-500 to-rose-500 flex justify-between items-center">
+                  <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-400 flex justify-between items-center">
                     <h3 className="text-white font-semibold">Get Started with EliteSiteCreation</h3>
                     <X 
                       className="text-white cursor-pointer" 

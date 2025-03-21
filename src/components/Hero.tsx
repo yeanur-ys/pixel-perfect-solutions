@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -43,10 +44,10 @@ const Hero = () => {
     
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
-    // Create a soft, glowing material with a blue/purple color palette
+    // Create a soft, glowing material with a blue color palette
     const particleMaterial = new THREE.PointsMaterial({
       size: 2.5,
-      color: 0xff3d81, // Updated to match the primary color
+      color: 0x3b82f6, // Updated to royal blue color
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending
@@ -157,7 +158,7 @@ const Hero = () => {
   }, [robotLoaded]);
 
   return (
-    <div ref={containerRef} className="relative h-screen overflow-hidden bg-black">
+    <div ref={containerRef} className="relative h-screen overflow-hidden bg-gradient-to-br from-blue-950 to-blue-900">
       {/* Background Canvas */}
       <canvas 
         ref={canvasRef} 
@@ -219,7 +220,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6 text-white cursor-magnet"
           >
-            Transform Your <span className="text-primary">Digital Presence</span>
+            Transform Your <span className="text-blue-400">Digital Presence</span>
           </motion.h1>
           
           <motion.p 
@@ -276,7 +277,7 @@ const Hero = () => {
               duration: 1.5,
               ease: "easeInOut" 
             }}
-            className="w-1.5 h-1.5 rounded-full bg-primary"
+            className="w-1.5 h-1.5 rounded-full bg-blue-400"
           />
         </div>
       </motion.div>
