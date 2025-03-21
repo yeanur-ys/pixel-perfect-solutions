@@ -23,9 +23,12 @@ const CursorEffect = () => {
       // Add hover detection on interactive elements
       const interactiveElements = document.querySelectorAll('a, button, .cursor-magnet');
       
+      const handleMouseEnter = () => setCursorVariant('hover');
+      const handleMouseLeave = () => setCursorVariant('default');
+      
       interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => setCursorVariant('hover'));
-        el.addEventListener('mouseleave', () => setCursorVariant('default'));
+        el.addEventListener('mouseenter', handleMouseEnter);
+        el.addEventListener('mouseleave', handleMouseLeave);
       });
       
       // Hide the default cursor
@@ -37,12 +40,15 @@ const CursorEffect = () => {
         window.removeEventListener("mousemove", mouseMove);
         document.body.style.cursor = 'auto';
         
-        // Clean up event listeners
+        // Clean up event listeners with proper function references
         const interactiveElements = document.querySelectorAll('a, button, .cursor-magnet');
         
+        const handleMouseEnter = () => setCursorVariant('hover');
+        const handleMouseLeave = () => setCursorVariant('default');
+        
         interactiveElements.forEach(el => {
-          el.removeEventListener('mouseenter', () => setCursorVariant('hover'));
-          el.removeEventListener('mouseleave', () => setCursorVariant('default'));
+          el.removeEventListener('mouseenter', handleMouseEnter);
+          el.removeEventListener('mouseleave', handleMouseLeave);
         });
       }
     };
@@ -88,13 +94,13 @@ const CursorEffect = () => {
         className="cursor-dot"
         variants={variants}
         animate={cursorVariant}
-        transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.5 }}
+        transition={{ type: "tween", duration: 0 }}
       />
       <motion.div
         className="cursor-ring"
         variants={outlineVariants}
         animate={cursorVariant}
-        transition={{ type: "spring", damping: 40, stiffness: 250, mass: 0.8 }}
+        transition={{ type: "tween", duration: 0 }}
       />
     </>
   );

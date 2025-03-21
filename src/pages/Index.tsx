@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, X } from 'lucide-react';
@@ -10,6 +11,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Chatbot from '@/components/Chatbot';
 import CursorEffect from '@/components/CursorEffect';
+import SectionAnimation from '@/components/SectionAnimation';
 import { Progress } from '@/components/ui/progress';
 
 const maintenanceImages = [
@@ -146,12 +148,7 @@ const Index = () => {
             </motion.h2>
             
             <div className="loading-progress-container">
-              <div className="loading-progress">
-                <motion.div 
-                  className="loading-progress-bar"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
+              <Progress value={loadingProgress} className="h-1 bg-blue-900/30" />
               <p className="mt-3 text-sm text-center text-blue-200">Loading experience... {loadingProgress}%</p>
             </div>
             
@@ -215,7 +212,10 @@ const Index = () => {
           <Navbar />
           <Hero />
           
-          <Services />
+          <div className="relative">
+            <SectionAnimation id="services" color="#1e40af" />
+            <Services />
+          </div>
           
           <ServiceSection 
             id="maintenance"
@@ -223,6 +223,7 @@ const Index = () => {
             subtitle="Keep Your Site Fresh"
             description="Focus on your business while we ensure your website stays updated, secure, and optimized for performance. Our maintenance services include regular updates, security monitoring, content management, and performance optimization."
             images={maintenanceImages}
+            animationColor="#1e65af"
           />
           
           <ServiceSection 
@@ -232,6 +233,7 @@ const Index = () => {
             description="Leverage AI and Machine Learning to gain actionable insights, automate tasks, and enhance decision-making for your business. Our AI solutions are tailored to your specific needs and designed to give you a competitive edge."
             images={aiImages}
             reversed
+            animationColor="#1e40af"
           />
           
           <ServiceSection 
@@ -240,6 +242,7 @@ const Index = () => {
             subtitle="Visual Excellence"
             description="Enhance your brand with cutting-edge graphic design that creates an immersive experience for your audience. Our GFX design services include branding, UI/UX design, illustration, and motion graphics."
             images={gfxImages}
+            animationColor="#2d3a8c"
           />
           
           <ServiceSection 
@@ -249,9 +252,13 @@ const Index = () => {
             description="Transform your visuals with stunning visual effects that captivate and engage your audience. Our VFX design services include compositing, 3D animation, particle effects, and more."
             images={vfxImages}
             reversed
+            animationColor="#1e3a8a"
           />
           
-          <ContactSection />
+          <div className="relative">
+            <SectionAnimation id="contact" color="#3b82f6" />
+            <ContactSection />
+          </div>
           
           <Footer />
           

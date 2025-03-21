@@ -1,6 +1,7 @@
+
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Bot } from 'lucide-react';
+import { X, Send, Bot, ChevronRight } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -119,13 +120,30 @@ const Chatbot = () => {
   ];
 
   const handleQuickReply = (type: string) => {
-    const response = getBotResponse(type);
-    const newBotMessage: Message = {
+    // Add user message 
+    const newUserMessage: Message = {
       id: messages.length + 1,
-      text: response,
-      sender: 'bot',
+      text: quickReplies.find(reply => reply.text.toLowerCase().includes(type))?.text || type,
+      sender: 'user',
     };
-    setMessages((prev) => [...prev, newBotMessage]);
+    setMessages((prev) => [...prev, newUserMessage]);
+    
+    // Get bot response
+    const response = getBotResponse(type);
+    
+    // Show typing indicator
+    setIsTyping(true);
+    
+    // Simulate bot response after a short delay
+    setTimeout(() => {
+      const newBotMessage: Message = {
+        id: messages.length + 2,
+        text: response,
+        sender: 'bot',
+      };
+      setIsTyping(false);
+      setMessages((prev) => [...prev, newBotMessage]);
+    }, 1000);
   };
 
   const handleSendMessage = () => {
@@ -153,7 +171,7 @@ const Chatbot = () => {
       };
       setIsTyping(false);
       setMessages((prev) => [...prev, newBotMessage]);
-    }, 1500);
+    }, 1000);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -166,11 +184,12 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button */}
       <motion.div
-        className="w-12 h-12 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer"
+        className="w-12 h-12 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
       >
+        <div className="absolute inset-0 bg-blue-600 opacity-20"></div>
         {isOpen ? <X size={22} /> : <Bot size={22} />}
       </motion.div>
 
@@ -178,27 +197,32 @@ const Chatbot = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed right-6 bottom-20 w-80 h-96 bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col"
+            className="fixed right-6 bottom-20 w-80 md:w-96 h-[450px] bg-gray-950 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col border border-blue-900/30"
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-gradient-to-r from-pink-500 to-rose-500 p-4 text-white font-bold flex justify-between items-center">
-              <span>EliteSiteCreation Support</span>
-              <motion.div whileHover={{ rotate: 90 }} onClick={toggleChatbot}>
-                <X size={18} className="cursor-pointer" />
+            <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-4 text-white font-bold flex justify-between items-center relative">
+              <div className="absolute inset-0 bg-blue-600 opacity-10"></div>
+              <span className="relative">EliteSiteCreation Support</span>
+              <motion.div 
+                whileHover={{ rotate: 90 }} 
+                onClick={toggleChatbot}
+                className="relative cursor-pointer"
+              >
+                <X size={18} />
               </motion.div>
             </div>
 
-            <div className="flex-1 p-4 overflow-y-auto space-y-3">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-gray-950 to-gray-900">
               {messages.map((message) => (
                 <div
                   key={message.id}
-                  className={`p-3 rounded-xl max-w-[80%] ${
+                  className={`p-3 rounded-xl max-w-[85%] ${
                     message.sender === 'bot'
                       ? 'bg-gray-800 text-white rounded-bl-none self-start'
-                      : 'bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-br-none self-end ml-auto'
+                      : 'bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-br-none self-end ml-auto'
                   }`}
                 >
                   {message.text}
@@ -206,42 +230,48 @@ const Chatbot = () => {
               ))}
 
               {isTyping && (
-                <div className="p-2 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[80%]">
-                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce"></span>
-                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                  <span className="inline-block w-2 h-2 bg-white rounded-full mx-0.5 animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                <div className="p-3 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[85%]">
+                  <div className="flex space-x-1">
+                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></span>
+                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                  </div>
                 </div>
               )}
 
-              {/* Quick Replies */}
-              <div className="flex gap-2 mt-2">
+              <div ref={messagesEndRef} />
+            </div>
+            
+            {/* Quick Replies */}
+            <div className="p-2 border-t border-gray-800 bg-gray-900 max-h-24 overflow-y-auto">
+              <div className="flex flex-wrap gap-2">
                 {quickReplies.map((reply, index) => (
                   <button
                     key={index}
                     onClick={reply.action}
-                    className="bg-gray-800 text-white px-3 py-1 rounded-lg hover:bg-gray-700"
+                    className="bg-gray-800 hover:bg-gray-700 text-blue-300 px-3 py-1 rounded-lg text-sm flex items-center transition-colors border border-gray-700"
                   >
+                    <ChevronRight size={14} className="mr-1" />
                     {reply.text}
                   </button>
                 ))}
               </div>
-
-              <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-3 border-t border-gray-800 flex items-center gap-2">
+            <div className="p-3 border-t border-gray-800 flex items-center gap-2 bg-gray-900">
               <input
                 type="text"
                 placeholder="Type your message..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-primary"
+                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={handleSendMessage}
-                className="bg-gradient-to-r from-pink-500 to-rose-500 text-white p-2 rounded-lg hover:opacity-90 transition-colors"
+                className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-2 rounded-lg hover:opacity-90 transition-colors"
+                disabled={!inputMessage.trim()}
               >
                 <Send size={18} />
               </motion.button>

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import Slideshow from './Slideshow';
 import { useScrollAnimation } from '@/lib/animations';
+import SectionAnimation from './SectionAnimation';
 
 interface ServiceSectionProps {
   id: string;
@@ -11,6 +12,7 @@ interface ServiceSectionProps {
   description: string;
   images: string[];
   reversed?: boolean;
+  animationColor?: string;
 }
 
 const ServiceSection = ({ 
@@ -19,7 +21,8 @@ const ServiceSection = ({
   subtitle, 
   description, 
   images, 
-  reversed = false 
+  reversed = false,
+  animationColor
 }: ServiceSectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
@@ -32,17 +35,20 @@ const ServiceSection = ({
   };
   
   return (
-    <section id={id} className="py-24 px-4 md:px-6" ref={sectionRef}>
+    <section id={id} className="py-24 px-4 md:px-6 relative overflow-hidden" ref={sectionRef}>
+      {/* 3D Animation Background */}
+      <SectionAnimation id={id} color={animationColor} />
+      
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         animate={isVisible ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="section-title"
+        className="section-title relative z-10"
       >
         {title}
       </motion.h2>
       
-      <div className={`container mx-auto flex flex-col ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center`}>
+      <div className={`container mx-auto flex flex-col ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 items-center relative z-10`}>
         <motion.div 
           initial={{ opacity: 0, x: reversed ? -50 : 50 }}
           animate={isVisible ? { opacity: 1, x: 0 } : {}}
@@ -60,7 +66,7 @@ const ServiceSection = ({
           transition={{ duration: 0.7, delay: 0.3 }}
           className="w-full lg:w-1/2"
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
+          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-blue-700/10 text-blue-400">
             {subtitle}
           </span>
           
