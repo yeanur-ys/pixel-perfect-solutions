@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
@@ -19,8 +19,8 @@ const Hero = () => {
 
   return (
     <div className="relative h-screen overflow-hidden bg-black">
-      {/* Background elements */}
-      <div className="absolute inset-0">
+      {/* Background elements - this will be reused across the site */}
+      <div className="absolute inset-0 website-bg-animation">
         <div className="absolute inset-0 opacity-30">
           {[...Array(50)].map((_, i) => (
             <div 
@@ -40,48 +40,13 @@ const Hero = () => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950/40 to-black opacity-80" />
       </div>
-
-      {/* Custom Cursor (only shown on desktop) */}
-      <div className="hidden md:block">
-        <motion.div
-          className="cursor-dot"
-          animate={{
-            x: mousePosition.x,
-            y: mousePosition.y,
-          }}
-          transition={{
-            type: "spring",
-            damping: 25,
-            stiffness: 300,
-            mass: 0.5
-          }}
-        />
-        <motion.div
-          className="cursor-outline"
-          animate={{
-            x: mousePosition.x,
-            y: mousePosition.y,
-          }}
-          transition={{
-            type: "spring",
-            damping: 40,
-            stiffness: 250,
-            mass: 0.8
-          }}
-        />
-      </div>
       
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 md:px-8">
         {/* Animated gradient circles */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(37,99,235,0.3) 0%, rgba(29,78,216,0.1) 50%, rgba(0,0,0,0) 70%)",
-              width: "100vh",
-              height: "100vh",
-            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full gradient-circle-large"
             animate={{
               scale: [1, 1.1, 1],
               opacity: [0.5, 0.3, 0.5]
@@ -93,12 +58,7 @@ const Hero = () => {
             }}
           />
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(30,64,175,0.4) 0%, rgba(30,58,138,0.1) 40%, rgba(0,0,0,0) 60%)",
-              width: "70vh",
-              height: "70vh",
-            }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full gradient-circle-medium"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.4, 0.2, 0.4]

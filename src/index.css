@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,6 +34,9 @@
     --ring: 212.7 26.8% 83.9%;
     
     --radius: 0.75rem;
+    
+    --royal-blue-light: 221 90% 60%;
+    --royal-blue-dark: 222 80% 40%;
   }
 
   * {
@@ -99,6 +103,7 @@
            transition-all duration-200 text-white;
   }
 
+  /* Animation classes */
   .slide-up {
     @apply opacity-0 translate-y-8 transition-all duration-700;
   }
@@ -131,23 +136,42 @@
     @apply opacity-100 translate-x-0;
   }
 
+  /* New cursor styles */
   .cursor-dot {
-    @apply fixed top-0 left-0 w-0.5 h-0.5 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full pointer-events-none z-[9999] mix-blend-difference;
+    @apply fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999];
+    background: rgb(var(--royal-blue-light));
     transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
   }
 
-  .cursor-outline {
-    @apply fixed top-0 left-0 w-2 h-2 border border-blue-500 rounded-full pointer-events-none z-[9998] mix-blend-difference;
+  .cursor-ring {
+    @apply fixed top-0 left-0 w-8 h-8 border-2 rounded-full pointer-events-none z-[9998];
+    border-color: rgba(59, 130, 246, 0.5);
     transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
   }
 
-  .cursor-magnet:hover ~ .cursor-dot,
-  .cursor-magnet:hover ~ .cursor-outline {
-    @apply transform scale-150 bg-white;
+  /* Website background animation */
+  .website-bg-animation {
+    @apply fixed inset-0 w-full h-full overflow-hidden -z-10;
   }
 
+  /* Gradient circles */
+  .gradient-circle-large {
+    background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, rgba(29,78,216,0.1) 50%, rgba(0,0,0,0) 70%);
+    width: 100vh;
+    height: 100vh;
+  }
+
+  .gradient-circle-medium {
+    background: radial-gradient(circle, rgba(30,64,175,0.4) 0%, rgba(30,58,138,0.1) 40%, rgba(0,0,0,0) 60%);
+    width: 70vh;
+    height: 70vh;
+  }
+
+  /* New loading screen styles */
   .loading-screen {
-    @apply fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-950 to-blue-900 z-[9999];
+    @apply fixed inset-0 flex items-center justify-center bg-black z-[9999];
   }
 
   .loading-container {
@@ -155,24 +179,22 @@
   }
 
   .loading-circle {
-    @apply relative flex flex-col items-center justify-center w-48 h-48 rounded-full bg-gradient-to-r from-blue-700 to-blue-500 shadow-lg mb-6;
+    @apply relative flex items-center justify-center w-36 h-36 rounded-full;
+    background: linear-gradient(135deg, hsl(var(--royal-blue-light)), hsl(var(--royal-blue-dark)));
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
   }
 
   .loading-circle::before {
     content: '';
-    @apply absolute inset-1 rounded-full bg-blue-900;
-  }
-
-  .loading-circle-inner {
-    @apply relative z-10 flex flex-col items-center justify-center;
+    @apply absolute inset-2 rounded-full bg-black;
   }
 
   .loading-logo {
-    @apply text-4xl font-bold text-white mb-1;
+    @apply relative z-10 text-4xl font-bold text-white;
   }
 
   .loading-text {
-    @apply text-white text-lg font-light;
+    @apply mt-4 text-white text-lg font-light;
   }
 
   .loading-progress-container {
@@ -180,19 +202,21 @@
   }
 
   .loading-progress {
-    @apply bg-blue-900/50;
+    @apply bg-blue-900/30 rounded-full overflow-hidden;
   }
 
-  .loading-progress [role="progressbar"] {
-    @apply bg-gradient-to-r from-blue-500 to-blue-700;
+  .loading-progress-bar {
+    @apply h-1 bg-gradient-to-r from-blue-700 to-blue-400;
   }
 
+  /* Loading particles */
   .loading-particles {
     @apply absolute inset-0 w-full h-full pointer-events-none;
   }
 
   .loading-particle {
-    @apply absolute w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-blue-700;
+    @apply absolute w-1 h-1 rounded-full;
+    background: linear-gradient(135deg, hsl(var(--royal-blue-light)), hsl(var(--royal-blue-dark)));
     box-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
   }
 

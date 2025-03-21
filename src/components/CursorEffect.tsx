@@ -50,30 +50,30 @@ const CursorEffect = () => {
 
   const variants = {
     default: {
-      x: mousePosition.x - 1, // Smaller size
-      y: mousePosition.y - 1,
+      x: mousePosition.x,
+      y: mousePosition.y,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 1,
-      y: mousePosition.y - 1,
-      scale: 1.1, // Less scale on hover
-      backgroundColor: "rgba(37, 99, 235, 0.6)" // Change to blue
+      x: mousePosition.x,
+      y: mousePosition.y,
+      scale: 1.5,
+      backgroundColor: "rgba(59, 130, 246, 0.6)"
     }
   };
 
   const outlineVariants = {
     default: {
-      x: mousePosition.x - 4, // Smaller outline
-      y: mousePosition.y - 4,
+      x: mousePosition.x,
+      y: mousePosition.y,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 4,
-      y: mousePosition.y - 4,
-      scale: 1.3, // Less scale on hover
-      backgroundColor: "rgba(0, 0, 0, 0)", 
-      borderColor: "rgba(37, 99, 235, 0.5)" // Match with primary color
+      x: mousePosition.x,
+      y: mousePosition.y,
+      scale: 2,
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      borderColor: "rgba(59, 130, 246, 0.5)"
     }
   };
 
@@ -91,7 +91,7 @@ const CursorEffect = () => {
         transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.5 }}
       />
       <motion.div
-        className="cursor-outline"
+        className="cursor-ring"
         variants={outlineVariants}
         animate={cursorVariant}
         transition={{ type: "spring", damping: 40, stiffness: 250, mass: 0.8 }}

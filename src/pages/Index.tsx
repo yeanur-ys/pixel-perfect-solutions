@@ -10,7 +10,6 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Chatbot from '@/components/Chatbot';
 import CursorEffect from '@/components/CursorEffect';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Progress } from '@/components/ui/progress';
 
 const maintenanceImages = [
@@ -98,34 +97,43 @@ const Index = () => {
           exit={{ opacity: 0 }}
           className="loading-screen"
         >
+          <div className="website-bg-animation">
+            <div className="absolute inset-0 opacity-30">
+              {[...Array(50)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="absolute rounded-full bg-blue-600"
+                  style={{
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    width: `${Math.random() * 6 + 1}px`,
+                    height: `${Math.random() * 6 + 1}px`,
+                    opacity: Math.random() * 0.5 + 0.3,
+                    animation: `pulse-animation ${Math.random() * 4 + 3}s infinite alternate`,
+                    animationDelay: `${Math.random() * 3}s`
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
           <div className="loading-container">
             <motion.div 
               className="loading-circle"
               animate={{ 
-                rotate: 360
+                rotate: 360,
+                boxShadow: [
+                  "0 0 20px rgba(59, 130, 246, 0.3)",
+                  "0 0 40px rgba(59, 130, 246, 0.5)",
+                  "0 0 20px rgba(59, 130, 246, 0.3)"
+                ]
               }}
               transition={{ 
-                duration: 20, 
-                repeat: Infinity,
-                ease: "linear" 
+                rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
               }}
             >
-              <div className="loading-circle-inner">
-                <motion.div
-                  className="loading-logo"
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    opacity: [0.9, 1, 0.9]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse"
-                  }}
-                >
-                  ESC
-                </motion.div>
-              </div>
+              <div className="loading-logo">ESC</div>
             </motion.div>
             
             <motion.h2
@@ -138,40 +146,17 @@ const Index = () => {
             </motion.h2>
             
             <div className="loading-progress-container">
-              <Progress value={loadingProgress} className="loading-progress h-2" />
+              <div className="loading-progress">
+                <motion.div 
+                  className="loading-progress-bar"
+                  style={{ width: `${loadingProgress}%` }}
+                />
+              </div>
               <p className="mt-3 text-sm text-center text-blue-200">Loading experience... {loadingProgress}%</p>
             </div>
             
-            <div className="mt-10 flex justify-center">
-              <motion.div 
-                animate={{ 
-                  rotate: 360,
-                  filter: [
-                    "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))",
-                    "drop-shadow(0 0 15px rgba(59, 130, 246, 0.8))",
-                    "drop-shadow(0 0 5px rgba(59, 130, 246, 0.5))"
-                  ]
-                }}
-                transition={{ 
-                  rotate: { duration: 3, repeat: Infinity, ease: "linear" },
-                  filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="inline-block"
-              >
-                <Loader2 className="h-8 w-8 text-blue-400 mx-auto" />
-              </motion.div>
-            </div>
-            
-            <motion.p
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="mt-6 text-sm text-center text-blue-300"
-            >
-              Crafting digital excellence for you
-            </motion.p>
-            
             <div className="loading-particles">
-              {[...Array(30)].map((_, i) => (
+              {[...Array(20)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="loading-particle"
@@ -182,10 +167,10 @@ const Index = () => {
                     scale: 0
                   }}
                   animate={{
-                    x: `calc(50% + ${Math.cos(i * (Math.PI * 2 / 30)) * (100 + Math.random() * 50)}px)`,
-                    y: `calc(50% + ${Math.sin(i * (Math.PI * 2 / 30)) * (100 + Math.random() * 50)}px)`,
+                    x: `calc(50% + ${Math.cos(i * (Math.PI * 2 / 20)) * (Math.random() * 100 + 50)}px)`,
+                    y: `calc(50% + ${Math.sin(i * (Math.PI * 2 / 20)) * (Math.random() * 100 + 50)}px)`,
                     opacity: [0, 1, 0],
-                    scale: [0, 1.5, 0],
+                    scale: [0, 1, 0],
                   }}
                   transition={{
                     duration: 2 + Math.random() * 2,
@@ -204,8 +189,29 @@ const Index = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="min-h-screen bg-gradient-to-br from-blue-950 to-blue-900 text-foreground overflow-hidden"
+          className="min-h-screen bg-black text-foreground overflow-hidden"
         >
+          <div className="website-bg-animation">
+            <div className="absolute inset-0 opacity-30">
+              {[...Array(50)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="absolute rounded-full bg-blue-600"
+                  style={{
+                    top: `${Math.random() * 100}%`,
+                    left: `${Math.random() * 100}%`,
+                    width: `${Math.random() * 6 + 1}px`,
+                    height: `${Math.random() * 6 + 1}px`,
+                    opacity: Math.random() * 0.5 + 0.3,
+                    animation: `pulse-animation ${Math.random() * 4 + 3}s infinite alternate`,
+                    animationDelay: `${Math.random() * 3}s`
+                  }}
+                />
+              ))}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950/30 to-black opacity-80" />
+          </div>
+          
           <Navbar />
           <Hero />
           
