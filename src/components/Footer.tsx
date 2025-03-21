@@ -12,10 +12,11 @@ const Footer = () => {
               We craft cutting-edge digital solutions to elevate your business presence online.
             </p>
             <div className="flex space-x-4">
-              {['Twitter', 'LinkedIn', 'Instagram', 'Facebook'].map((social) => (
+              {['Facebook', 'Instagram', 'Whatsapp', 'Youtube'].map((social) => (
                 <motion.a
                   key={social}
-                  href="#"
+                  href="https://web.facebook.com/profile.php?id=61573012953551"
+                  
                   whileHover={{ y: -3, transition: { duration: 0.2 } }}
                   className="text-foreground/60 hover:text-primary transition-colors duration-300"
                 >
