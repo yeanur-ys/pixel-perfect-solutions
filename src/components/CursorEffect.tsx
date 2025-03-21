@@ -50,13 +50,13 @@ const CursorEffect = () => {
 
   const variants = {
     default: {
-      x: mousePosition.x - 3, // Smaller size
-      y: mousePosition.y - 3,
+      x: mousePosition.x - 2, // Smaller size
+      y: mousePosition.y - 2,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 3,
-      y: mousePosition.y - 3,
+      x: mousePosition.x - 2,
+      y: mousePosition.y - 2,
       scale: 1.1, // Less scale on hover
       backgroundColor: "rgba(255, 64, 129, 0.6)" // Change to gradient color
     }
@@ -64,13 +64,13 @@ const CursorEffect = () => {
 
   const outlineVariants = {
     default: {
-      x: mousePosition.x - 8, // Smaller outline
-      y: mousePosition.y - 8,
+      x: mousePosition.x - 6, // Smaller outline
+      y: mousePosition.y - 6,
       scale: 1
     },
     hover: {
-      x: mousePosition.x - 8,
-      y: mousePosition.y - 8,
+      x: mousePosition.x - 6,
+      y: mousePosition.y - 6,
       scale: 1.3, // Less scale on hover
       backgroundColor: "rgba(0, 0, 0, 0)", 
       borderColor: "rgba(255, 64, 129, 0.5)" // Match with primary color

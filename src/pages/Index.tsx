@@ -77,20 +77,12 @@ const Index = () => {
       setShowWhatsApp(true);
     };
 
-    document.querySelectorAll('.button-primary').forEach((button) => {
-      button.addEventListener('click', handleGetStarted);
-    });
-
     window.addEventListener('openWhatsApp', handleGetStarted);
 
     return () => {
       clearInterval(interval);
       document.querySelectorAll('.slide-up, .scale-up, .slide-in-left, .slide-in-right').forEach((el) => {
         observer.unobserve(el);
-      });
-
-      document.querySelectorAll('.button-primary').forEach((button) => {
-        button.removeEventListener('click', handleGetStarted);
       });
       
       window.removeEventListener('openWhatsApp', handleGetStarted);
@@ -107,66 +99,84 @@ const Index = () => {
           className="loading-screen"
         >
           <div className="flex flex-col items-center justify-center h-full w-full">
-            <div className="loading-container max-w-md mx-auto text-center">
-              <div className="relative mb-8">
-                <div className="loading-logo-container">
-                  <svg viewBox="0 0 300 50" width="300" height="50" className="mx-auto">
-                    <text x="0" y="35" className="loading-text-stroke">
-                      EliteSiteCreation
-                    </text>
-                    <text x="0" y="35" className="loading-text-fill">
-                      EliteSiteCreation
-                    </text>
-                  </svg>
-                  
-                  <div className="loading-particles">
-                    {[...Array(20)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="loading-particle"
-                        animate={{
-                          x: [0, Math.random() * 100 - 50],
-                          y: [0, Math.random() * 100 - 50],
-                          opacity: [1, 0],
-                          scale: [1, 0],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: Math.random() * 2,
-                        }}
-                      />
-                    ))}
-                  </div>
+            <div className="loading-container">
+              <motion.div 
+                className="loading-logo-container"
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity,
+                  repeatType: "reverse" 
+                }}
+              >
+                <svg viewBox="0 0 300 50" width="300" height="50" className="mx-auto">
+                  <text x="15" y="35" className="loading-text-stroke">
+                    EliteSiteCreation
+                  </text>
+                  <text x="15" y="35" className="loading-text-fill">
+                    EliteSiteCreation
+                  </text>
+                </svg>
+                
+                <div className="loading-particles">
+                  {[...Array(30)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="loading-particle"
+                      initial={{ 
+                        x: 150,
+                        y: 25, 
+                        opacity: 0,
+                        scale: 0
+                      }}
+                      animate={{
+                        x: 150 + Math.cos(i * (Math.PI * 2 / 30)) * (80 + Math.random() * 20),
+                        y: 25 + Math.sin(i * (Math.PI * 2 / 30)) * (80 + Math.random() * 20),
+                        opacity: [0, 1, 0],
+                        scale: [0, 1.5, 0],
+                      }}
+                      transition={{
+                        duration: 2 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: i * 0.1,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  ))}
                 </div>
-              </div>
+              </motion.div>
               
-              <div className="loading-progress-container">
+              <div className="loading-progress-container mt-12">
                 <Progress value={loadingProgress} className="loading-progress h-2" />
-                <p className="mt-3 text-sm text-gray-400">Loading awesome experience... {loadingProgress}%</p>
+                <p className="mt-3 text-sm text-center text-gray-400">Loading awesome experience... {loadingProgress}%</p>
               </div>
               
-              <div className="mt-8">
+              <div className="mt-10 flex justify-center">
                 <motion.div 
                   animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0],
+                    rotate: 360,
+                    filter: [
+                      "drop-shadow(0 0 5px rgba(236, 72, 153, 0.5))",
+                      "drop-shadow(0 0 15px rgba(236, 72, 153, 0.8))",
+                      "drop-shadow(0 0 5px rgba(236, 72, 153, 0.5))"
+                    ]
                   }}
                   transition={{ 
-                    duration: 2, 
-                    repeat: Infinity,
-                    repeatType: "reverse" 
+                    rotate: { duration: 3, repeat: Infinity, ease: "linear" },
+                    filter: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                   }}
                   className="inline-block"
                 >
-                  <Loader2 className="animate-spin h-10 w-10 text-primary mx-auto" />
+                  <Loader2 className="h-8 w-8 text-primary mx-auto" />
                 </motion.div>
               </div>
               
               <motion.p
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="mt-6 text-sm text-gray-500"
+                className="mt-6 text-sm text-center text-gray-500"
               >
                 Crafting digital excellence for you
               </motion.p>

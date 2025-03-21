@@ -2,12 +2,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [robotLoaded, setRobotLoaded] = useState(false);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -45,7 +47,7 @@ const Hero = () => {
     // Create a soft, glowing material with a blue/purple color palette
     const particleMaterial = new THREE.PointsMaterial({
       size: 2.5,
-      color: 0x4169e1,
+      color: 0xff3d81, // Updated to match the primary color
       transparent: true,
       opacity: 0.8,
       blending: THREE.AdditiveBlending
@@ -54,6 +56,37 @@ const Hero = () => {
     // Create the particle system
     const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particleSystem);
+    
+    // Add lighting for the robot
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(0, 10, 10);
+    scene.add(directionalLight);
+    
+    // Load the 3D rover model
+    let robot: THREE.Group;
+    const loader = new GLTFLoader();
+    
+    // Load robot model (using a Mars rover model)
+    loader.load(
+      'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/RobotExpressive/glTF/RobotExpressive.gltf',
+      (gltf) => {
+        robot = gltf.scene;
+        robot.scale.set(150, 150, 150);
+        robot.position.set(0, -200, 0);
+        robot.rotation.y = Math.PI;
+        scene.add(robot);
+        setRobotLoaded(true);
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+      },
+      (error) => {
+        console.error('An error happened while loading the robot model:', error);
+      }
+    );
     
     // Position camera
     camera.position.z = 500;
@@ -101,6 +134,16 @@ const Hero = () => {
       camera.rotation.x += (targetY - camera.rotation.x) * 0.05;
       camera.rotation.y += (targetX - camera.rotation.y) * 0.05;
       
+      // Animate the robot if it's loaded
+      if (robotLoaded && robot) {
+        // Make the robot follow the mouse at a reduced rate
+        robot.rotation.y = -targetX * 2;
+        robot.rotation.x = targetY * 0.5;
+        
+        // Subtle floating animation
+        robot.position.y = -200 + Math.sin(Date.now() * 0.001) * 10;
+      }
+      
       renderer.render(scene, camera);
     };
     
@@ -112,7 +155,7 @@ const Hero = () => {
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
-  }, []);
+  }, [robotLoaded]);
 
   return (
     <div ref={containerRef} className="relative h-screen overflow-hidden bg-black">
@@ -196,14 +239,14 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <motion.a 
-              href="#web-development" 
+            <motion.button
               className="button-primary cursor-magnet"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => window.dispatchEvent(new Event('openWhatsApp'))}
             >
-              Explore Services
-            </motion.a>
+              Get Started
+            </motion.button>
             <motion.a 
               href="#contact" 
               className="button-secondary cursor-magnet"
