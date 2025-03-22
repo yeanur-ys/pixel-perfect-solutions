@@ -48,7 +48,7 @@ const ContactSection = () => {
     
     try {
       // Send form data to our server-side API endpoint
-      const response = await fetch('/send-email', {
+      const response = await fetch('api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
