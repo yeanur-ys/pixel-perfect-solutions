@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Send the email
       await transporter.sendMail({
         from: 'support@elitesitecreation.com', // Sender email
-        to: 'elitesitecreation@gmail.com', // Receiver email
+        to: 'support@elitesitecreation.com', // Receiver email
         subject: `Contact Form Submission from ${name}`, // Email subject
         text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Plain text body
         html: `
