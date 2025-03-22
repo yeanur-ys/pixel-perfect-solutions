@@ -1,3 +1,4 @@
+
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -45,17 +46,18 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Send form data to your backend API
-      const response = await fetch('pages/send-email', {
+      // Create FormData object for formsubmit.co
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('message', data.message);
+      formData.append('_subject', `Contact Form Submission from ${data.name}`);
+      formData.append('_captcha', 'false');
+      
+      // Using formsubmit.co service
+      const response = await fetch('https://formsubmit.co/support@elitesitecreation.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        }),
+        body: formData,
       });
 
       if (response.ok) {

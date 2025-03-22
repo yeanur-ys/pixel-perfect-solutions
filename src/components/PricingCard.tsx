@@ -15,6 +15,11 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const isVisible = useScrollAnimation(cardRef, 'scale-up');
   
+  const handleGetStarted = () => {
+    // Trigger the WhatsApp event like other buttons
+    window.dispatchEvent(new CustomEvent('openWhatsApp'));
+  };
+  
   return (
     <motion.div
       ref={cardRef}
@@ -51,6 +56,7 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
       <motion.button
         whileTap={{ scale: 0.97 }}
         className="button-primary w-full mt-auto"
+        onClick={handleGetStarted}
       >
         Get Started
       </motion.button>
