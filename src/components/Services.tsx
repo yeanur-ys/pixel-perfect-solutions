@@ -7,38 +7,41 @@ import { useScrollAnimation } from '@/lib/animations';
 const pricingPlans = [
   {
     title: 'Basic Website',
-    price: '$999',
+    price: '৳4,999-14,999',
     features: [
       '5 Custom Pages',
       'Mobile Responsive',
       'Basic SEO',
-      '1 Month Support',
-      'Contact Form',
+      '3 Months Support',
+      'Mail Integration',
+      'Animation Interphase'
     ],
   },
   {
     title: 'Advanced Website',
-    price: '$1,999',
+    price: '৳24,999-49,000',
     features: [
       '10 Custom Pages',
       'SEO Optimization',
       'Advanced Analytics',
-      '3 Months Support',
-      'Blog Integration',
+      '6 Months Support',
+      'Payment Integration',
       'Custom Forms',
+      'Customer Account Interphase'
     ],
   },
   {
-    title: 'Premium Solution',
-    price: '$2,999',
+    title: 'Premium Website',
+    price: '৳79,999-1,19,999',
     features: [
       'Unlimited Pages',
       'Advanced SEO',
       'E-commerce Integration',
-      '6 Months Support',
+      '1 Year Support',
       'Custom Animations',
       'Performance Optimization',
       'Premium Hosting',
+      'Customer Communication Interphase'
     ],
   },
 ];
