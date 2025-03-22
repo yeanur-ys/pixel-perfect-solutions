@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters long' }),
@@ -46,19 +47,16 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Create FormData object for formsubmit.co
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('message', data.message);
-      formData.append('_subject', `Contact Form Submission from ${data.name}`);
-      formData.append('_captcha', 'false');
-      
-      // Using formsubmit.co service
-      const response = await fetch('https://formsubmit.co/support@elitesitecreation.com', {
+      // Send form data to our server-side API endpoint
+      const response = await fetch('/api/send-email', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
+
+      const result = await response.json();
 
       if (response.ok) {
         toast({
@@ -67,7 +65,7 @@ const ContactSection = () => {
         });
         form.reset();
       } else {
-        throw new Error('Failed to send message');
+        throw new Error(result.message || 'Failed to send message');
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -155,7 +153,7 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel className="text-gray-300">Your Message</FormLabel>
                       <FormControl>
-                        <textarea
+                        <Textarea
                           {...field}
                           rows={5}
                           className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
