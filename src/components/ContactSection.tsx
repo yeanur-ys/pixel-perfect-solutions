@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters long' }),
@@ -45,8 +46,8 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Send email using EmailJS or a similar service
-      const response = await fetch('https://formsubmit.co/elitesitecreation@gmail.com', {
+      // Using FormSubmit.co service with your Hostinger email
+      const response = await fetch('https://formsubmit.co/support@elitesitecreation.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,9 +119,9 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel className="text-gray-300">Your Name</FormLabel>
                       <FormControl>
-                        <input
+                        <Input
                           {...field}
-                          className="input-field bg-gray-900 border-gray-700 text-gray-200 w-full"
+                          className="bg-gray-900 border-gray-700 text-gray-200"
                           placeholder="John Doe"
                         />
                       </FormControl>
@@ -136,10 +137,10 @@ const ContactSection = () => {
                     <FormItem>
                       <FormLabel className="text-gray-300">Email Address</FormLabel>
                       <FormControl>
-                        <input
+                        <Input
                           {...field}
                           type="email"
-                          className="input-field bg-gray-900 border-gray-700 text-gray-200 w-full"
+                          className="bg-gray-900 border-gray-700 text-gray-200"
                           placeholder="john@example.com"
                         />
                       </FormControl>
@@ -158,7 +159,7 @@ const ContactSection = () => {
                         <textarea
                           {...field}
                           rows={5}
-                          className="input-field resize-none bg-gray-900 border-gray-700 text-gray-200 w-full"
+                          className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                           placeholder="Tell us about your project..."
                         />
                       </FormControl>
@@ -170,7 +171,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="button-primary w-full flex items-center justify-center"
+                  className="w-full flex items-center justify-center"
                 >
                   {isSubmitting ? (
                     <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
