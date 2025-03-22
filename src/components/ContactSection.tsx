@@ -123,7 +123,7 @@ const ContactSection = () => {
                         <Input
                           {...field}
                           className="bg-gray-900 border-gray-700 text-gray-200"
-                          placeholder="John Doe"
+                          placeholder="John Wick"
                         />
                       </FormControl>
                       <FormMessage />
@@ -142,7 +142,7 @@ const ContactSection = () => {
                           {...field}
                           type="email"
                           className="bg-gray-900 border-gray-700 text-gray-200"
-                          placeholder="john@example.com"
+                          placeholder="johnwick@example.com"
                         />
                       </FormControl>
                       <FormMessage />
