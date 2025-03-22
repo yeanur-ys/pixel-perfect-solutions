@@ -1,4 +1,3 @@
-
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -46,22 +45,19 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Using FormSubmit.co service with proper headers and direct email
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('message', data.message);
-      formData.append('_subject', `Contact Form Submission from ${data.name}`);
-      // Add _captcha parameter to prevent spam
-      formData.append('_captcha', 'false');
-      // Redirect to the same page after submission
-      formData.append('_next', window.location.href);
-      
-      const response = await fetch('https://formsubmit.co/support@elitesitecreation.com', {
+      // Send form data to your backend API
+      const response = await fetch('/api/send-email', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+        }),
       });
-      
+
       if (response.ok) {
         toast({
           title: "Message sent!",
