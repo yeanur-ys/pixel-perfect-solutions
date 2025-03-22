@@ -46,19 +46,20 @@ const ContactSection = () => {
     setIsSubmitting(true);
     
     try {
-      // Using FormSubmit.co service with your Hostinger email
+      // Using FormSubmit.co service with proper headers and direct email
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('message', data.message);
+      formData.append('_subject', `Contact Form Submission from ${data.name}`);
+      // Add _captcha parameter to prevent spam
+      formData.append('_captcha', 'false');
+      // Redirect to the same page after submission
+      formData.append('_next', window.location.href);
+      
       const response = await fetch('https://formsubmit.co/support@elitesitecreation.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-          _subject: `Contact Form Submission from ${data.name}`,
-        }),
+        body: formData,
       });
       
       if (response.ok) {

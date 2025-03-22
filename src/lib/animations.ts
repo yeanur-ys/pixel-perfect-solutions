@@ -15,16 +15,25 @@ export const useIntersectionObserver = (options = {}) => {
   };
 
   useEffect(() => {
-    observer.current = new IntersectionObserver((observedEntries) => {
-      setEntries(observedEntries);
-    }, defaultOptions);
+    // Create the observer only once
+    if (!observer.current) {
+      observer.current = new IntersectionObserver((observedEntries) => {
+        setEntries(observedEntries);
+      }, defaultOptions);
+    }
 
-    return () => observer.current?.disconnect();
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+        observer.current = null;
+      }
+    };
   }, [defaultOptions.threshold, defaultOptions.root, defaultOptions.rootMargin]);
 
   useEffect(() => {
     const { current: currentObserver } = observer;
     if (currentObserver) {
+      // Disconnect and reconnect only when elements change
       currentObserver.disconnect();
       
       if (elements.length > 0) {
@@ -65,18 +74,25 @@ export const useAnimatedVisibility = (initialVisible: boolean = false) => {
   };
 };
 
+// Optimize scroll animation hook with better performance
 export const useScrollAnimation = (elementRef: React.RefObject<HTMLElement>, animationClass: string): boolean => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Use a more performant approach with better options
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        // Only trigger once when element becomes visible
+        if (entry.isIntersecting && !isVisible) {
           setIsVisible(true);
+          // Once visible, stop observing to save resources
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15 }
+      { 
+        threshold: 0.1, // Lower threshold for better performance
+        rootMargin: '50px 0px', // Pre-load animations slightly before they come into view
+      }
     );
 
     const element = elementRef.current;
@@ -88,6 +104,7 @@ export const useScrollAnimation = (elementRef: React.RefObject<HTMLElement>, ani
       if (element) {
         observer.unobserve(element);
       }
+      observer.disconnect();
     };
   }, [elementRef, animationClass]);
 
