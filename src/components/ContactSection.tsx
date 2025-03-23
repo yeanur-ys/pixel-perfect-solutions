@@ -1,4 +1,3 @@
-
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle } from 'lucide-react';
@@ -27,25 +26,20 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-// This is a mock of the email sending functionality for the browser preview
-// In a real environment with a backend server, we would use the actual API
 const sendEmail = async (data: FormValues): Promise<{ success: boolean; message: string }> => {
   try {
-    // For local development/preview in the browser
-    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-      // Simulate network delay for preview
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      return { success: true, message: 'Email sent successfully!' };
-    }
-    
-    // For production with real backend
-    const response = await fetch('https://your-api-domain.com/api/send-email', {
+    const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to send email');
+    }
     
     const result = await response.json();
     return result;
