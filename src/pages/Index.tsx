@@ -1,10 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import EnhancedServices from '@/components/EnhancedServices';
-import Services from '@/components/Services';
 import ServiceSection from '@/components/ServiceSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
