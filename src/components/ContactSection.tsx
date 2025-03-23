@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { useScrollAnimation } from '@/lib/animations';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,6 +33,7 @@ const ContactSection = () => {
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -45,10 +46,11 @@ const ContactSection = () => {
 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
+    setSubmitSuccess(false);
     
     try {
       // Send form data to our server-side API endpoint
-      const response = await fetch('api/send-email', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,6 +61,7 @@ const ContactSection = () => {
       const result = await response.json();
 
       if (response.ok) {
+        setSubmitSuccess(true);
         toast({
           title: "Message sent!",
           description: "We'll get back to you as soon as possible.",
