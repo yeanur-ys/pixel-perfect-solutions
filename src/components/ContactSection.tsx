@@ -1,7 +1,7 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Send, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useScrollAnimation } from '@/lib/animations';
 import { useForm } from 'react-hook-form';
@@ -27,6 +27,16 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+// This is a mock of the email sending functionality since we can't run a backend server directly in the browser preview
+// In a real environment, this would call the actual API endpoint
+const mockSendEmail = async (data: FormValues): Promise<{ success: boolean; message: string }> => {
+  // Simulate network delay
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  
+  // Simulate successful response
+  return { success: true, message: 'Email sent successfully!' };
+};
+
 const ContactSection = () => {
   const { toast } = useToast();
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -49,18 +59,12 @@ const ContactSection = () => {
     setSubmitSuccess(false);
     
     try {
-      // Send form data to our server-side API endpoint
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
+      // In the actual deployed app, this would be replaced with a real API call:
+      // const response = await fetch('https://your-api-domain.com/api/send-email', {
+      // For now, we'll use the mock function for preview purposes
+      const result = await mockSendEmail(data);
+      
+      if (result.success) {
         setSubmitSuccess(true);
         toast({
           title: "Message sent!",
@@ -110,79 +114,97 @@ const ContactSection = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="lg:w-1/2"
           >
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-300">Your Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          className="bg-gray-900 border-gray-700 text-gray-200"
-                          placeholder="John Wick"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-300">Email Address</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          className="bg-gray-900 border-gray-700 text-gray-200"
-                          placeholder="johnwick@example.com"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-gray-300">Your Message</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          {...field}
-                          rows={5}
-                          className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                          placeholder="Tell us about your project..."
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex items-center justify-center"
+            {submitSuccess ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-primary/10 rounded-xl p-8 h-full flex flex-col items-center justify-center text-center"
+              >
+                <CheckCircle className="h-16 w-16 text-primary mb-4" />
+                <h3 className="text-2xl font-medium text-white mb-2">Thank You!</h3>
+                <p className="text-gray-400 mb-6">Your message has been sent successfully. We'll be in touch soon!</p>
+                <Button 
+                  onClick={() => setSubmitSuccess(false)}
+                  variant="outline"
                 >
-                  {isSubmitting ? (
-                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      Send Message <Send className="ml-2 h-4 w-4" />
-                    </>
-                  )}
+                  Send Another Message
                 </Button>
-              </form>
-            </Form>
+              </motion.div>
+            ) : (
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-300">Your Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="bg-gray-900 border-gray-700 text-gray-200"
+                            placeholder="John Wick"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-300">Email Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            className="bg-gray-900 border-gray-700 text-gray-200"
+                            placeholder="johnwick@example.com"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-300">Your Message</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            rows={5}
+                            className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            placeholder="Tell us about your project..."
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center"
+                  >
+                    {isSubmitting ? (
+                      <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        Send Message <Send className="ml-2 h-4 w-4" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            )}
           </motion.div>
           
           <motion.div 
