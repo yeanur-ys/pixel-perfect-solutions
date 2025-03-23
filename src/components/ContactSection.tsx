@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { useScrollAnimation } from '@/lib/animations';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,14 +27,32 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-// This is a mock of the email sending functionality since we can't run a backend server directly in the browser preview
-// In a real environment, this would call the actual API endpoint
-const mockSendEmail = async (data: FormValues): Promise<{ success: boolean; message: string }> => {
-  // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // Simulate successful response
-  return { success: true, message: 'Email sent successfully!' };
+// This is a mock of the email sending functionality for the browser preview
+// In a real environment with a backend server, we would use the actual API
+const sendEmail = async (data: FormValues): Promise<{ success: boolean; message: string }> => {
+  try {
+    // For local development/preview in the browser
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      // Simulate network delay for preview
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return { success: true, message: 'Email sent successfully!' };
+    }
+    
+    // For production with real backend
+    const response = await fetch('https://your-api-domain.com/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return { success: false, message: 'Failed to send email.' };
+  }
 };
 
 const ContactSection = () => {
@@ -59,10 +77,7 @@ const ContactSection = () => {
     setSubmitSuccess(false);
     
     try {
-      // In the actual deployed app, this would be replaced with a real API call:
-      // const response = await fetch('https://your-api-domain.com/api/send-email', {
-      // For now, we'll use the mock function for preview purposes
-      const result = await mockSendEmail(data);
+      const result = await sendEmail(data);
       
       if (result.success) {
         setSubmitSuccess(true);
