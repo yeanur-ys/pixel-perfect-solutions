@@ -19,7 +19,7 @@ const pricingPlans = [
   },
   {
     title: 'Advanced Website',
-    price: '৳24,999-49,000',
+    price: '৳24,999-49,999',
     features: [
       '10 Custom Pages',
       'SEO Optimization',
