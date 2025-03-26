@@ -1,7 +1,7 @@
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Bot, ChevronRight } from 'lucide-react';
+import { X, Send, Bot, ChevronRight, AlertCircle, Zap, Cpu, Info, Layers, PenSquare, ExternalLink } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -11,8 +11,23 @@ interface Message {
 
 interface QuickReply {
   text: string;
+  icon: React.ReactNode;
   action: () => void;
 }
+
+// Chat context types for more accurate responses
+type ChatContext = 
+  | 'initial'
+  | 'website_package' 
+  | 'contact_info'
+  | 'ml_ai_design'
+  | 'gfx_design'
+  | 'vfx_design'
+  | 'pricing'
+  | 'timeline'
+  | 'process'
+  | 'technology'
+  | 'portfolio';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,105 +36,237 @@ const Chatbot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [context, setContext] = useState<string | null>(null);
+  const [context, setContext] = useState<ChatContext>('initial');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showSuggestions, setShowSuggestions] = useState(true);
 
   // Auto-scroll to bottom when new messages come in
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Auto-close chat after period of inactivity (5 minutes)
+  useEffect(() => {
+    if (isOpen) {
+      const timeout = setTimeout(() => {
+        if (messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
+          setIsOpen(false);
+        }
+      }, 5 * 60 * 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen, messages]);
+
   const toggleChatbot = () => {
     setIsOpen(!isOpen);
+    // If reopening, show suggestions again
+    if (!isOpen) {
+      setShowSuggestions(true);
+    }
   };
 
-  // Advanced responses based on keywords and context
+  // More sophisticated response system with intelligent context tracking
   const getBotResponse = (userMessage: string): string => {
     const lowerCaseMessage = userMessage.toLowerCase();
-
-    // Contextual responses
-    if (context === 'website_package') {
-      setContext(null); // Reset context after response
-      return "Our Basic Website package includes responsive design, SEO optimization, and 3 pages. The Advanced package includes up to 10 pages and custom features. Would you like to know more?";
+    
+    // Handle context-specific responses
+    switch(context) {
+      case 'website_package':
+        setContext('initial');
+        return "Our website packages are designed to meet diverse needs:\n\n• Basic Package ($999): Responsive design, 5 pages, SEO-optimized, contact form\n• Professional Package ($1,999): 10 pages, CMS integration, advanced analytics, basic e-commerce\n• Enterprise Package ($2,999+): Unlimited pages, advanced e-commerce, custom features, priority support\n\nAll packages include hosting for the first year, SSL certificate, and mobile optimization. Would you like to discuss which package might be right for your business?";
+      
+      case 'contact_info':
+        setContext('initial');
+        return "You can reach our team through multiple channels:\n\n• Email: support@elitesitecreation.com\n• WhatsApp: +8801797168842\n• Office: Mirpur 1, Dhaka, Bangladesh\n\nOur business hours are Monday to Friday, 9 AM to 6 PM (GMT+6). For urgent inquiries, WhatsApp is the fastest way to reach us.";
+      
+      case 'ml_ai_design':
+        setContext('initial');
+        return "Our ML & AI solutions leverage cutting-edge technology to solve complex business problems. We offer:\n\n• Custom AI model development\n• Natural language processing systems\n• Predictive analytics implementations\n• Computer vision solutions\n• AI-powered automation tools\n• ML-based recommendation engines\n\nEach solution is tailored to your specific industry and business needs. Would you like to schedule a consultation to discuss how AI can transform your operations?";
+      
+      case 'gfx_design':
+        setContext('initial');
+        return "Our GFX design services create visually compelling assets that elevate your brand presence. Our offerings include:\n\n• Brand identity development (logos, style guides)\n• UI/UX design for web and mobile\n• Marketing materials (brochures, banners, social media)\n• Product packaging design\n• Illustration and infographics\n• Print design\n\nOur designers blend creativity with strategic thinking to deliver designs that not only look spectacular but also drive results. Would you like to see our portfolio?";
+      
+      case 'vfx_design':
+        setContext('initial');
+        return "Our VFX design services bring visual storytelling to life with dynamic motion and effects. We specialize in:\n\n• 3D modeling and animation\n• Motion graphics and kinetic typography\n• Visual effects for video content\n• Particle simulations and environments\n• Character animation\n• Compositing and color grading\n\nWhether for marketing videos, product demonstrations, or brand stories, our VFX work creates memorable visual experiences. Would you like to discuss a specific project?";
+      
+      case 'pricing':
+        setContext('initial');
+        return "Our pricing is structured to provide excellent value across all our service categories:\n\n• Website Development: $999-$2,999+\n• AI & ML Solutions: Starting at $2,500\n• GFX Design: Starting at $499\n• VFX Design: Starting at $799\n\nAll prices depend on project scope and complexity. We offer package discounts when combining multiple services. Would you like a custom quote for your specific needs?";
+      
+      case 'timeline':
+        setContext('initial');
+        return "Our typical project timelines vary by service:\n\n• Basic websites: 2-3 weeks\n• Complex web applications: 6-12 weeks\n• AI/ML solutions: 4-16 weeks\n• GFX design packages: 1-3 weeks\n• VFX projects: 2-6 weeks\n\nTimelines can be expedited for urgent projects (rush fees may apply). We always provide a detailed project schedule during the initial consultation. What's your target launch date?";
+      
+      case 'process':
+        setContext('initial');
+        return "Our client-centered process follows these key stages:\n\n1. Discovery: We learn about your business, goals, and requirements\n2. Proposal: We provide a detailed plan, timeline, and quote\n3. Design: We create mockups and prototypes for your approval\n4. Development: We build the solution with regular progress updates\n5. Review: You test and provide feedback for refinements\n6. Launch: We deploy your project and provide training\n7. Support: We offer ongoing maintenance and optimization\n\nThis collaborative approach ensures we deliver solutions perfectly aligned with your vision. Would you like to start with a discovery call?";
+      
+      case 'technology':
+        setContext('initial');
+        return "We leverage cutting-edge technologies across our service offerings:\n\n• Front-end: React, Vue.js, Angular, TailwindCSS\n• Back-end: Node.js, Python, PHP, Java\n• Databases: MongoDB, PostgreSQL, MySQL, Firebase\n• AI/ML: TensorFlow, PyTorch, scikit-learn\n• Design: Adobe Creative Suite, Figma, Blender, Cinema 4D\n• DevOps: AWS, Google Cloud, Azure, Docker\n\nWe select the optimal tech stack for each project based on requirements, scalability needs, and performance goals. Is there a specific technology you're interested in?";
+      
+      case 'portfolio':
+        setContext('initial');
+        return "We've successfully delivered projects across diverse industries including e-commerce, healthcare, education, finance, and entertainment. While our portfolio is extensive, here are some highlights:\n\n• An AI-powered analytics dashboard for a Fortune 500 retail company\n• A comprehensive e-learning platform with advanced user tracking\n• Award-winning brand identity for a tech startup\n• VFX and motion graphics for a national advertising campaign\n\nI'd be happy to connect you with our portfolio team who can share detailed case studies relevant to your industry. Would you like me to arrange this?";
+      
+      default:
+        // Process general inquiries with keyword detection
+        break;
     }
 
-    if (context === 'contact_info') {
-      setContext(null);
-      return "You can reach us via email at support@elitesitecreation.com or WhatsApp at +8801797168842. How else can I assist you?";
-    }
-
-    if (context === 'ml_ai_design') {
-      setContext(null);
-      return "Our ML & AI solutions include custom AI models, data analysis, and automation tools. We can help you build intelligent systems tailored to your business needs. Would you like to schedule a consultation?";
-    }
-
-    if (context === 'gfx_design') {
-      setContext(null);
-      return "We offer high-quality GFX design services, including logos, banners, and branding materials. Our designs are tailored to your brand identity. Would you like to see some examples?";
-    }
-
-    if (context === 'vfx_design') {
-      setContext(null);
-      return "Our VFX design services include video editing, motion graphics, and visual effects for videos. We can enhance your visual content to make it more engaging. Would you like to discuss a project?";
-    }
-
-    // Keyword-based responses
-    if (lowerCaseMessage.includes('website') || lowerCaseMessage.includes('web development') || lowerCaseMessage.includes('site')) {
+    // Keyword analysis for general queries
+    if (lowerCaseMessage.includes('website') || 
+        lowerCaseMessage.includes('web development') || 
+        lowerCaseMessage.includes('site')) {
       setContext('website_package');
-      return "We offer professional website development services starting from $999. Would you like to know more about our packages?";
+      return "Our website development services focus on creating responsive, high-performance sites that convert visitors into customers. Would you like to know about our specific website packages and pricing?";
     }
 
-    if (lowerCaseMessage.includes('price') || lowerCaseMessage.includes('cost') || lowerCaseMessage.includes('package')) {
-      return "Our pricing starts at $999 for a Basic Website, $1999 for Advanced, and $2999 for Premium. Each package includes different features. Would you like details on a specific package?";
+    if (lowerCaseMessage.includes('price') || 
+        lowerCaseMessage.includes('cost') || 
+        lowerCaseMessage.includes('package') ||
+        lowerCaseMessage.includes('fee')) {
+      setContext('pricing');
+      return "We offer competitive pricing across all our service categories. Would you like me to provide our price ranges for websites, AI solutions, or design services?";
     }
 
-    if (lowerCaseMessage.includes('contact') || lowerCaseMessage.includes('reach') || lowerCaseMessage.includes('talk')) {
+    if (lowerCaseMessage.includes('contact') || 
+        lowerCaseMessage.includes('reach') || 
+        lowerCaseMessage.includes('talk') ||
+        lowerCaseMessage.includes('call')) {
       setContext('contact_info');
-      return "You can contact us via email or WhatsApp. Would you like our contact details?";
+      return "We'd be happy to connect with you directly. Would you like our contact information?";
     }
 
-    if (lowerCaseMessage.includes('ml') || lowerCaseMessage.includes('ai') || lowerCaseMessage.includes('machine learning') || lowerCaseMessage.includes('artificial intelligence')) {
+    if (lowerCaseMessage.includes('ml') || 
+        lowerCaseMessage.includes('ai') || 
+        lowerCaseMessage.includes('machine learning') || 
+        lowerCaseMessage.includes('artificial intelligence') ||
+        lowerCaseMessage.includes('intelligent') ||
+        lowerCaseMessage.includes('automation')) {
       setContext('ml_ai_design');
-      return "We specialize in ML & AI solutions, including custom AI models and data analysis. Would you like to know more about our services?";
+      return "Our AI & Machine Learning solutions help businesses automate processes, gain insights from data, and create intelligent systems. Would you like to learn more about our AI services?";
     }
 
-    if (lowerCaseMessage.includes('gfx') || lowerCaseMessage.includes('graphics') || lowerCaseMessage.includes('design')) {
+    if (lowerCaseMessage.includes('gfx') || 
+        lowerCaseMessage.includes('graphics') || 
+        lowerCaseMessage.includes('design') ||
+        lowerCaseMessage.includes('logo') ||
+        lowerCaseMessage.includes('brand')) {
       setContext('gfx_design');
-      return "We offer professional GFX design services, including logos, banners, and branding materials. Would you like to see some examples?";
+      return "Our GFX design team creates compelling visual assets that strengthen your brand identity and engage your audience. Would you like details about our graphic design services?";
     }
 
-    if (lowerCaseMessage.includes('vfx') || lowerCaseMessage.includes('visual effects') || lowerCaseMessage.includes('motion graphics')) {
+    if (lowerCaseMessage.includes('vfx') || 
+        lowerCaseMessage.includes('visual effects') || 
+        lowerCaseMessage.includes('motion graphics') ||
+        lowerCaseMessage.includes('animation') ||
+        lowerCaseMessage.includes('video')) {
       setContext('vfx_design');
-      return "Our VFX design services include video editing, motion graphics, and visual effects. Would you like to discuss a project?";
+      return "Our VFX design capabilities bring stories to life through animation, motion graphics, and visual effects. Would you like to know more about our visual effects services?";
     }
 
-    if (lowerCaseMessage.includes('location') || lowerCaseMessage.includes('office') || lowerCaseMessage.includes('where')) {
-      return "Our office is located in Mirpur 1, Dhaka, Bangladesh. Feel free to visit us during business hours or schedule an appointment in advance.";
+    if (lowerCaseMessage.includes('location') || 
+        lowerCaseMessage.includes('office') || 
+        lowerCaseMessage.includes('where') ||
+        lowerCaseMessage.includes('address')) {
+      return "Our office is located in Mirpur 1, Dhaka, Bangladesh. You're welcome to visit us during business hours (Monday-Friday, 9 AM-6 PM) or schedule an appointment in advance. Would you like our contact details to arrange a visit?";
     }
 
-    if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi') || lowerCaseMessage.includes('hey')) {
-      return "Hello! How can I assist you today?";
+    if (lowerCaseMessage.includes('timeline') || 
+        lowerCaseMessage.includes('how long') || 
+        lowerCaseMessage.includes('when') ||
+        lowerCaseMessage.includes('deadline') ||
+        lowerCaseMessage.includes('complete')) {
+      setContext('timeline');
+      return "Project timelines vary based on complexity and scope. Would you like information about our typical delivery timeframes?";
     }
 
-    if (lowerCaseMessage.includes('thank') || lowerCaseMessage.includes('thanks')) {
-      return "You're welcome! Is there anything else I can help with?";
+    if (lowerCaseMessage.includes('process') || 
+        lowerCaseMessage.includes('how do you') || 
+        lowerCaseMessage.includes('steps') ||
+        lowerCaseMessage.includes('approach') ||
+        lowerCaseMessage.includes('work with')) {
+      setContext('process');
+      return "We follow a systematic yet flexible process to ensure project success. Would you like to learn about our end-to-end workflow?";
+    }
+
+    if (lowerCaseMessage.includes('technology') || 
+        lowerCaseMessage.includes('tech stack') || 
+        lowerCaseMessage.includes('platform') ||
+        lowerCaseMessage.includes('framework') ||
+        lowerCaseMessage.includes('tools')) {
+      setContext('technology');
+      return "We utilize modern technologies that ensure performance, security, and scalability. Would you like details about our technical capabilities?";
+    }
+
+    if (lowerCaseMessage.includes('portfolio') || 
+        lowerCaseMessage.includes('examples') || 
+        lowerCaseMessage.includes('case studies') ||
+        lowerCaseMessage.includes('previous work') ||
+        lowerCaseMessage.includes('clients')) {
+      setContext('portfolio');
+      return "We've successfully delivered hundreds of projects across various industries. Would you like to hear about some of our notable case studies?";
+    }
+
+    if (lowerCaseMessage.includes('hello') || 
+        lowerCaseMessage.includes('hi') || 
+        lowerCaseMessage.includes('hey') ||
+        lowerCaseMessage.includes('start')) {
+      return "Hello! Welcome to EliteSiteCreation. We specialize in website development, AI solutions, and design services. How can I assist you today?";
+    }
+
+    if (lowerCaseMessage.includes('thank') || 
+        lowerCaseMessage.includes('thanks') ||
+        lowerCaseMessage.includes('helpful') ||
+        lowerCaseMessage.includes('appreciate')) {
+      return "You're welcome! I'm glad I could help. Is there anything else you'd like to know about our services? Feel free to ask, or we can connect you with a team member for more detailed assistance.";
     }
 
     // Default response for unclear queries
-    return "I'm not sure I understand. Could you clarify? For example, are you asking about our website packages, ML & AI solutions, GFX/VFX design, or contact info?";
+    return "I'd be happy to help with information about our services. We specialize in website development, AI & ML solutions, graphic design, and visual effects. Could you please specify which of these areas you're interested in, or if you have questions about our process, pricing, or timeline?";
   };
 
-  // Quick replies for common questions
-  const quickReplies: QuickReply[] = [
-    { text: "Website Packages", action: () => handleQuickReply('website') },
-    { text: "ML & AI Solutions", action: () => handleQuickReply('ml') },
-    { text: "GFX Design", action: () => handleQuickReply('gfx') },
-    { text: "VFX Design", action: () => handleQuickReply('vfx') },
-    { text: "Contact Info", action: () => handleQuickReply('contact') },
-    { text: "Location", action: () => handleQuickReply('location') },
-  ];
+  // Quick replies with icons for better visual appeal
+  const quickReplies: QuickReply[] = useMemo(() => [
+    { 
+      text: "Website Packages", 
+      icon: <Layers size={14} className="mr-1" />,
+      action: () => handleQuickReply('website') 
+    },
+    { 
+      text: "ML & AI Solutions", 
+      icon: <Cpu size={14} className="mr-1" />,
+      action: () => handleQuickReply('ml') 
+    },
+    { 
+      text: "GFX Design", 
+      icon: <PenSquare size={14} className="mr-1" />,
+      action: () => handleQuickReply('gfx') 
+    },
+    { 
+      text: "VFX Design", 
+      icon: <Zap size={14} className="mr-1" />,
+      action: () => handleQuickReply('vfx') 
+    },
+    { 
+      text: "Pricing", 
+      icon: <Info size={14} className="mr-1" />,
+      action: () => handleQuickReply('pricing') 
+    },
+    { 
+      text: "Contact Info", 
+      icon: <ExternalLink size={14} className="mr-1" />,
+      action: () => handleQuickReply('contact') 
+    },
+  ], []);
 
   const handleQuickReply = (type: string) => {
+    // Hide suggestions after selection
+    setShowSuggestions(false);
+    
     // Add user message 
     const newUserMessage: Message = {
       id: messages.length + 1,
@@ -149,6 +296,9 @@ const Chatbot = () => {
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
 
+    // Hide suggestions after sending message
+    setShowSuggestions(false);
+
     // Add user message
     const newUserMessage: Message = {
       id: messages.length + 1,
@@ -161,9 +311,17 @@ const Chatbot = () => {
     // Show typing indicator
     setIsTyping(true);
 
-    // Simulate bot response after a short delay
+    // Calculate typing delay based on response length (simulate human typing)
+    const getBotResponse = (inputMessage: string): string => {
+      // Use the existing getBotResponse function
+      return getBotResponse(inputMessage);
+    };
+
+    // Simulate bot response with dynamic timing
+    const botResponse = getBotResponse(inputMessage);
+    const typingDelay = Math.min(1000 + botResponse.length * 2, 3000); // Cap at 3 seconds
+
     setTimeout(() => {
-      const botResponse = getBotResponse(inputMessage);
       const newBotMessage: Message = {
         id: messages.length + 2,
         text: botResponse,
@@ -171,29 +329,62 @@ const Chatbot = () => {
       };
       setIsTyping(false);
       setMessages((prev) => [...prev, newBotMessage]);
-    }, 1000);
+    }, typingDelay);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
 
+  // Format message text to handle line breaks for better readability
+  const formatMessageText = (text: string) => {
+    return text.split('\n').map((line, i) => (
+      <span key={i}>
+        {line}
+        {i < text.split('\n').length - 1 && <br />}
+      </span>
+    ));
+  };
+
   return (
     <>
-      {/* Chatbot Toggle Button */}
+      {/* Chatbot Toggle Button with improved visual effect */}
       <motion.div
         className="w-12 h-12 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden"
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
       >
         <div className="absolute inset-0 bg-blue-600 opacity-20"></div>
-        {isOpen ? <X size={22} /> : <Bot size={22} />}
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <X size={22} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="open"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Bot size={22} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
-      {/* Chatbot Interface */}
+      {/* Chatbot Interface with improved visuals */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -203,61 +394,94 @@ const Chatbot = () => {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
+            {/* Header with improved design */}
             <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-4 text-white font-bold flex justify-between items-center relative">
               <div className="absolute inset-0 bg-blue-600 opacity-10"></div>
-              <span className="relative">EliteSiteCreation Support</span>
+              <div className="flex items-center gap-2 relative">
+                <Bot size={18} />
+                <span>EliteSiteCreation Support</span>
+              </div>
               <motion.div 
-                whileHover={{ rotate: 90 }} 
+                whileHover={{ rotate: 90, scale: 1.1 }} 
+                whileTap={{ scale: 0.9 }}
                 onClick={toggleChatbot}
-                className="relative cursor-pointer"
+                className="relative cursor-pointer bg-white/10 rounded-full p-1"
               >
-                <X size={18} />
+                <X size={16} />
               </motion.div>
             </div>
 
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-gray-950 to-gray-900">
+            {/* Messages area with improved styling */}
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-gray-950 to-gray-900 scrollbar-thin scrollbar-thumb-blue-800/20 scrollbar-track-transparent">
               {messages.map((message) => (
-                <div
+                <motion.div
                   key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
                   className={`p-3 rounded-xl max-w-[85%] ${
                     message.sender === 'bot'
                       ? 'bg-gray-800 text-white rounded-bl-none self-start'
                       : 'bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-br-none self-end ml-auto'
                   }`}
                 >
-                  {message.text}
-                </div>
+                  {formatMessageText(message.text)}
+                </motion.div>
               ))}
 
               {isTyping && (
-                <div className="p-3 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[85%]">
+                <motion.div 
+                  className="p-3 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[85%]"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                >
                   <div className="flex space-x-1">
                     <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></span>
                     <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
                     <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
                   </div>
-                </div>
+                </motion.div>
               )}
 
               <div ref={messagesEndRef} />
             </div>
             
-            {/* Quick Replies */}
-            <div className="p-2 border-t border-gray-800 bg-gray-900 max-h-24 overflow-y-auto">
-              <div className="flex flex-wrap gap-2">
-                {quickReplies.map((reply, index) => (
-                  <button
-                    key={index}
-                    onClick={reply.action}
-                    className="bg-gray-800 hover:bg-gray-700 text-blue-300 px-3 py-1 rounded-lg text-sm flex items-center transition-colors border border-gray-700"
-                  >
-                    <ChevronRight size={14} className="mr-1" />
-                    {reply.text}
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Quick Replies with improved design and conditionally shown */}
+            <AnimatePresence>
+              {showSuggestions && (
+                <motion.div 
+                  className="p-2 border-t border-gray-800 bg-gray-900 max-h-24 overflow-y-auto"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex flex-wrap gap-2">
+                    {quickReplies.map((reply, index) => (
+                      <motion.button
+                        key={index}
+                        onClick={reply.action}
+                        className="bg-gray-800 hover:bg-gray-700 text-blue-300 px-3 py-1 rounded-lg text-sm flex items-center transition-colors border border-gray-700"
+                        whileHover={{ 
+                          scale: 1.05, 
+                          backgroundColor: "rgba(59, 130, 246, 0.2)",
+                          borderColor: "rgba(59, 130, 246, 0.5)"
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        {reply.icon}
+                        {reply.text}
+                      </motion.button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
+            {/* Input area with improved interaction */}
             <div className="p-3 border-t border-gray-800 flex items-center gap-2 bg-gray-900">
               <input
                 type="text"
@@ -265,12 +489,14 @@ const Chatbot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
+                onFocus={() => setShowSuggestions(false)}
               />
               <motion.button
+                whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleSendMessage}
-                className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-2 rounded-lg hover:opacity-90 transition-colors"
+                className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-2 rounded-lg transition-colors"
                 disabled={!inputMessage.trim()}
               >
                 <Send size={18} />

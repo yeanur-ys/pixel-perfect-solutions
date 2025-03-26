@@ -1,6 +1,6 @@
 
-import { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MountainSnow, Cpu, PaintBucket, Video } from 'lucide-react';
 import ServiceFeatureCard from './ServiceFeatureCard';
 import { useScrollAnimation } from '@/lib/animations';
@@ -9,6 +9,23 @@ const EnhancedServices = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check viewport size on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add event listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const services = [
     {
@@ -65,20 +82,23 @@ const EnhancedServices = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 * index }}
-              onHoverStart={() => setHoveredIndex(index)}
-              onHoverEnd={() => setHoveredIndex(null)}
+              onHoverStart={() => !isMobile && setHoveredIndex(index)}
+              onHoverEnd={() => !isMobile && setHoveredIndex(null)}
+              onTouchStart={() => isMobile && setHoveredIndex(index === hoveredIndex ? null : index)}
               className="relative"
             >
-              {hoveredIndex === index && (
-                <motion.div
-                  layoutId="serviceBg"
-                  className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-2xl"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
+              <AnimatePresence>
+                {hoveredIndex === index && (
+                  <motion.div
+                    layoutId="serviceBg"
+                    className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-2xl"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                )}
+              </AnimatePresence>
               <ServiceFeatureCard
                 icon={service.icon}
                 title={service.title}
