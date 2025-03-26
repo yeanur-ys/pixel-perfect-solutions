@@ -55,8 +55,8 @@ const EnhancedServices = () => {
   ];
 
   return (
-    <section id="enhanced-services" ref={sectionRef} className="py-24 px-4 md:px-6 relative overflow-hidden">
-      <div className="container mx-auto">
+    <section id="enhanced-services" ref={sectionRef} className="py-24 px-4 md:px-6 relative isolation overflow-hidden">
+      <div className="container mx-auto relative z-10">
         <motion.div 
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -75,7 +75,7 @@ const EnhancedServices = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -86,16 +86,18 @@ const EnhancedServices = () => {
               onHoverEnd={() => !isMobile && setHoveredIndex(null)}
               onTouchStart={() => isMobile && setHoveredIndex(index === hoveredIndex ? null : index)}
               className="relative"
+              style={{ zIndex: hoveredIndex === index ? 20 : 10 }}
             >
               <AnimatePresence>
                 {hoveredIndex === index && (
                   <motion.div
                     layoutId="serviceBg"
-                    className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-2xl"
+                    className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-2xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
+                    style={{ zIndex: -1 }}
                   />
                 )}
               </AnimatePresence>
