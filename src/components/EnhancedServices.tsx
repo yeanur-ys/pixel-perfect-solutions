@@ -4,28 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MountainSnow, Cpu, PaintBucket, Video } from 'lucide-react';
 import ServiceFeatureCard from './ServiceFeatureCard';
 import { useScrollAnimation } from '@/lib/animations';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const EnhancedServices = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check viewport size on mount and resize
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Initial check
-    checkMobile();
-
-    // Add event listener
-    window.addEventListener('resize', checkMobile);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  // Use the custom hook instead of useState + useEffect logic
+  const isMobile = useIsMobile();
 
   const services = [
     {
@@ -55,7 +41,11 @@ const EnhancedServices = () => {
   ];
 
   return (
-    <section id="enhanced-services" ref={sectionRef} className="py-24 px-4 md:px-6 relative isolation overflow-hidden">
+    <section 
+      id="enhanced-services" 
+      ref={sectionRef} 
+      className="py-24 px-4 md:px-6 relative isolation overflow-hidden"
+    >
       <div className="container mx-auto relative z-10">
         <motion.div 
           className="text-center mb-16"
@@ -75,7 +65,7 @@ const EnhancedServices = () => {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative pb-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -86,7 +76,7 @@ const EnhancedServices = () => {
               onHoverEnd={() => !isMobile && setHoveredIndex(null)}
               onTouchStart={() => isMobile && setHoveredIndex(index === hoveredIndex ? null : index)}
               className="relative"
-              style={{ zIndex: hoveredIndex === index ? 20 : 10 }}
+              style={{ zIndex: hoveredIndex === index ? 50 : 10 }}
             >
               <AnimatePresence>
                 {hoveredIndex === index && (
@@ -106,6 +96,7 @@ const EnhancedServices = () => {
                 title={service.title}
                 description={service.description}
                 detailedDescription={service.detailedDescription}
+                isMobile={isMobile}
               />
             </motion.div>
           ))}

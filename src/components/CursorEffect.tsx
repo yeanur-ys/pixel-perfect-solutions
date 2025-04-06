@@ -5,19 +5,29 @@ import { motion } from 'framer-motion';
 const CursorEffect = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState("default");
+  const [isTouchDevice, setIsTouchDevice] = useState(true); // Default to true until we check
 
   useEffect(() => {
-    const mouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
+    // More comprehensive check for touch devices
+    const checkTouchDevice = () => {
+      return (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+      );
     };
 
-    // Check if we're on mobile
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    if (!isMobile) {
+    const isTouchCapable = checkTouchDevice();
+    setIsTouchDevice(isTouchCapable);
+
+    if (!isTouchCapable) {
+      const mouseMove = (e: MouseEvent) => {
+        setMousePosition({
+          x: e.clientX,
+          y: e.clientY
+        });
+      };
+      
       window.addEventListener("mousemove", mouseMove);
       
       // Add hover detection on interactive elements
@@ -33,25 +43,18 @@ const CursorEffect = () => {
       
       // Hide the default cursor
       document.body.style.cursor = 'none';
-    }
 
-    return () => {
-      if (!isMobile) {
+      return () => {
         window.removeEventListener("mousemove", mouseMove);
         document.body.style.cursor = 'auto';
         
-        // Clean up event listeners with proper function references
-        const interactiveElements = document.querySelectorAll('a, button, .cursor-magnet');
-        
-        const handleMouseEnter = () => setCursorVariant('hover');
-        const handleMouseLeave = () => setCursorVariant('default');
-        
+        // Clean up event listeners
         interactiveElements.forEach(el => {
           el.removeEventListener('mouseenter', handleMouseEnter);
           el.removeEventListener('mouseleave', handleMouseLeave);
         });
-      }
-    };
+      };
+    }
   }, []);
 
   const variants = {
@@ -83,8 +86,8 @@ const CursorEffect = () => {
     }
   };
 
-  // Only render on desktop
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  // Only render on non-touch devices
+  if (isTouchDevice) {
     return null;
   }
 
