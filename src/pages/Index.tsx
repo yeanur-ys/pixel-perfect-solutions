@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, X } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
+import ModernHero from '@/components/ModernHero';
 import EnhancedServices from '@/components/EnhancedServices';
 import Services from '@/components/Services';
 import ServiceSection from '@/components/ServiceSection';
@@ -15,29 +15,17 @@ import SectionAnimation from '@/components/SectionAnimation';
 import { Progress } from '@/components/ui/progress';
 import AnimatedButton from '@/components/AnimatedButton';
 
-const maintenanceImages = [
-  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&auto=format&fit=crop',
-];
+import webDev1 from '@/assets/web-development-1.jpg';
+import responsiveDesign from '@/assets/responsive-design.jpg';
+import maintenanceImg from '@/assets/maintenance.jpg';
+import aiMlImg from '@/assets/ai-ml-solutions.jpg';
+import gfxImg from '@/assets/graphic-design.jpg';
+import vfxImg from '@/assets/vfx-motion.jpg';
 
-const aiImages = [
-  'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop',
-];
-
-const gfxImages = [
-  'https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=800&auto=format&fit=crop',
-];
-
-const vfxImages = [
-  'https://images.unsplash.com/photo-1627501691850-db08eb81199a?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop',
-];
+const maintenanceImages = [maintenanceImg, webDev1, responsiveDesign];
+const aiImages = [aiMlImg, webDev1, responsiveDesign];
+const gfxImages = [gfxImg, responsiveDesign, webDev1];
+const vfxImages = [vfxImg, gfxImg, responsiveDesign];
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -211,7 +199,7 @@ const Index = () => {
           </div>
           
           <Navbar />
-          <Hero />
+          <ModernHero />
           
           <div className="relative">
             <SectionAnimation id="services" color="#1e40af" />

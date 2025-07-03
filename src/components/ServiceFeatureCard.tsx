@@ -1,9 +1,8 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Lightbulb, ChevronRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import AnimatedButton from './AnimatedButton';
 
 interface ServiceFeatureCardProps {
@@ -27,7 +26,7 @@ const ServiceFeatureCard = ({
 }: ServiceFeatureCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Custom function to handle CTA click - we'll dispatch the openWhatsApp event
+  // Custom function to handle CTA click
   const handleCtaClick = () => {
     if (onCtaClick) {
       onCtaClick();
@@ -36,98 +35,82 @@ const ServiceFeatureCard = ({
     }
   };
 
-  // Content to show in popup/hover card
-  const PopupContent = () => (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-start gap-3">
-        <div className="mt-1 rounded-full bg-blue-500/20 p-2 text-blue-400">
-          <Lightbulb className="h-4 w-4" />
-        </div>
-        <div>
-          <h4 className="text-sm font-semibold text-white">{title}</h4>
-          <p className="text-xs text-gray-400">{detailedDescription}</p>
-        </div>
-      </div>
-      <AnimatedButton 
-        variant="primary" 
-        className="mt-2 w-full py-1.5 text-xs"
-        onClick={handleCtaClick}
-      >
-        Get Started
-      </AnimatedButton>
-    </div>
-  );
-
-  // Render different components based on mobile or desktop
   return (
     <motion.div
-      className="glass-card p-6 h-full"
-      initial={{ opacity: 0, y: 20 }}
+      className="glass-card p-6 h-full group cursor-pointer"
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ 
-        y: -5,
-        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-      }}
+      transition={{ duration: 0.6 }}
+      whileHover={{ y: -8 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {isMobile ? (
-        // Mobile view - use Popover (tap to open)
-        <Popover>
-          <PopoverTrigger asChild>
-            <div className="flex flex-col h-full cursor-pointer">
-              <div className="mb-4 text-blue-400">
-                {icon}
-              </div>
-              <h3 className="text-xl font-medium mb-2 text-white">{title}</h3>
-              <p className="text-gray-400 mb-4 flex-grow">{description}</p>
-              
+      <Dialog>
+        <DialogTrigger className="w-full h-full text-left">
+          <div className="flex flex-col h-full">
+            {/* Icon */}
+            <motion.div 
+              className="mb-6 text-primary group-hover:text-primary-light transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+            >
+              {icon}
+            </motion.div>
+            
+            {/* Title */}
+            <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-primary-light transition-colors duration-300">
+              {title}
+            </h3>
+            
+            {/* Description */}
+            <p className="text-gray-300 mb-6 flex-grow leading-relaxed">
+              {description}
+            </p>
+            
+            {/* CTA */}
+            <motion.div 
+              className="flex items-center text-primary text-sm font-medium group-hover:text-primary-light"
+              animate={{ x: isHovered ? 5 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <span>Explore More</span>
+              <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+            </motion.div>
+          </div>
+        </DialogTrigger>
+        
+        <DialogContent className="max-w-md mx-auto glass-card border-primary/20">
+          <div className="p-6">
+            <div className="flex items-start gap-4 mb-6">
               <motion.div 
-                className="flex items-center text-blue-400 text-sm font-medium"
-                animate={{ x: isHovered ? 5 : 0 }}
+                className="p-3 rounded-xl bg-primary/20 text-primary"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2 }}
               >
-                {ctaText}
-                <ChevronRight className="h-4 w-4 ml-1" />
+                <Sparkles className="h-6 w-6" />
               </motion.div>
-            </div>
-          </PopoverTrigger>
-          
-          <PopoverContent 
-            className="w-72 bg-gray-900/90 backdrop-blur-md border-gray-800 p-5 z-50"
-            side="bottom"
-            align="center"
-            sideOffset={5}
-          >
-            <PopupContent />
-          </PopoverContent>
-        </Popover>
-      ) : (
-        // Desktop view - use HoverCard
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <div className="flex flex-col h-full cursor-pointer">
-              <div className="mb-4 text-blue-400">
-                {icon}
+              <div>
+                <h4 className="text-xl font-semibold text-white mb-2">{title}</h4>
+                <p className="text-gray-300 leading-relaxed">{detailedDescription}</p>
               </div>
-              <h3 className="text-xl font-medium mb-2 text-white">{title}</h3>
-              <p className="text-gray-400 mb-4 flex-grow">{description}</p>
-              
-              <motion.div 
-                className="flex items-center text-blue-400 text-sm font-medium"
-                animate={{ x: isHovered ? 5 : 0 }}
-              >
-                {ctaText}
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </motion.div>
             </div>
-          </HoverCardTrigger>
-          
-          <HoverCardContent className="w-80 bg-gray-900/90 backdrop-blur-md border-gray-800 p-5 z-50">
-            <PopupContent />
-          </HoverCardContent>
-        </HoverCard>
-      )}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <AnimatedButton 
+                variant="primary" 
+                className="w-full py-3 text-sm font-medium"
+                onClick={handleCtaClick}
+              >
+                Start Your Project
+              </AnimatedButton>
+            </motion.div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </motion.div>
   );
 };

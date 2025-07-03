@@ -13,7 +13,8 @@ const CursorEffect = () => {
       return (
         'ontouchstart' in window ||
         navigator.maxTouchPoints > 0 ||
-        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+        /iPhone|iPad|iPod|Android|BlackBerry|Opera Mini|IEMobile/i.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) // iPad detection
       );
     };
 

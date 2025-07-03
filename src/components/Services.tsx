@@ -54,20 +54,25 @@ const Services = () => {
     <section id="web-development" ref={sectionRef} className="py-24 px-4 md:px-6">
       <div className="container mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
-            Web Development
-          </span>
-          <h2 className="text-3xl md:text-4xl font-light mb-6">
-            Website Development that Works for You
+          <motion.span 
+            className="inline-block px-4 py-2 mb-6 text-sm font-medium rounded-full glass-card"
+            initial={{ scale: 0.8 }}
+            animate={isVisible ? { scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            💼 Web Development
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-light mb-6 bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent">
+            Professional Websites That Convert
           </h2>
-          <p className="text-foreground/70 max-w-3xl mx-auto text-lg">
-            Create a powerful online presence with our professional web development services. 
-            Our websites are designed to be beautiful, functional, and optimized for conversions.
+          <p className="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
+            Transform your business with stunning, responsive websites built for performance, 
+            conversions, and exceptional user experiences across all devices.
           </p>
         </motion.div>
         

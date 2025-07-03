@@ -1,7 +1,7 @@
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MountainSnow, Cpu, PaintBucket, Video } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Shield, Brain, Palette, Camera } from 'lucide-react';
 import ServiceFeatureCard from './ServiceFeatureCard';
 import { useScrollAnimation } from '@/lib/animations';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -15,82 +15,73 @@ const EnhancedServices = () => {
 
   const services = [
     {
-      icon: <MountainSnow className="h-8 w-8" />,
+      icon: <Shield className="h-8 w-8" />,
       title: "Website Maintenance",
-      description: "Keep your digital presence fresh with our comprehensive maintenance services.",
-      detailedDescription: "Our maintenance includes regular updates, security monitoring, content refreshes, and performance optimization to keep your site running smoothly."
+      description: "Keep your digital presence secure, updated, and performing at its peak.",
+      detailedDescription: "Comprehensive maintenance including security monitoring, performance optimization, content updates, and 24/7 technical support to ensure your website runs flawlessly."
     },
     {
-      icon: <Cpu className="h-8 w-8" />,
-      title: "AI & ML Solutions",
-      description: "Leverage cutting-edge AI to drive innovation and efficiency for your business.",
-      detailedDescription: "From chatbots to predictive analytics, our AI solutions are custom-designed to solve your specific business challenges."
+      icon: <Brain className="h-8 w-8" />,
+      title: "AI & ML Solutions", 
+      description: "Harness the power of artificial intelligence to transform your business operations.",
+      detailedDescription: "Custom AI solutions including intelligent chatbots, predictive analytics, automation systems, and machine learning models tailored to your specific business needs."
     },
     {
-      icon: <PaintBucket className="h-8 w-8" />,
-      title: "GFX Design",
-      description: "Captivate your audience with stunning visual design that elevates your brand.",
-      detailedDescription: "Our graphic design services include branding, UI/UX design, illustrations, and more to create a cohesive visual identity."
+      icon: <Palette className="h-8 w-8" />,
+      title: "Graphic Design",
+      description: "Create stunning visual identities that captivate and convert your audience.",
+      detailedDescription: "Professional design services including brand identity, UI/UX design, marketing materials, logo design, and complete visual communication strategies."
     },
     {
-      icon: <Video className="h-8 w-8" />,
-      title: "VFX Design",
-      description: "Add motion magic to your content with professional visual effects.",
-      detailedDescription: "From motion graphics to 3D animation, our VFX services will bring your ideas to life with cinematic quality."
+      icon: <Camera className="h-8 w-8" />,
+      title: "VFX & Motion",
+      description: "Bring your vision to life with cinematic visual effects and animations.",
+      detailedDescription: "Professional VFX services including motion graphics, 3D animation, video effects, compositing, and interactive multimedia experiences."
     }
   ];
 
   return (
     <section 
-      id="enhanced-services" 
+      id="services" 
       ref={sectionRef} 
-      className="py-24 px-4 md:px-6 relative isolation overflow-hidden"
+      className="py-20 px-4 md:px-6 relative overflow-hidden"
     >
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+      
       <div className="container mx-auto relative z-10">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-blue-700/10 text-blue-400 border border-blue-800/50">
-            Our Expertise
-          </span>
-          <h2 className="text-4xl font-light mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Comprehensive Digital Services
+          <motion.span 
+            className="inline-block px-4 py-2 mb-6 text-sm font-medium rounded-full glass-card"
+            initial={{ scale: 0.8 }}
+            animate={isVisible ? { scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            ✨ Our Expertise
+          </motion.span>
+          <h2 className="text-4xl md:text-5xl font-light mb-6 bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent">
+            Digital Solutions That Drive Results
           </h2>
-          <p className="text-gray-400 max-w-3xl mx-auto">
-            We offer a full spectrum of digital solutions to transform your online presence
-            and help your business thrive in the digital landscape.
+          <p className="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
+            We combine cutting-edge technology with creative excellence to deliver 
+            comprehensive digital solutions that elevate your brand and drive business growth.
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-              onHoverStart={() => !isMobile && setHoveredIndex(index)}
-              onHoverEnd={() => !isMobile && setHoveredIndex(null)}
-              onTouchStart={() => isMobile && setHoveredIndex(index === hoveredIndex ? null : index)}
-              className="relative"
-              style={{ zIndex: hoveredIndex === index ? 50 : 10 }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              className="relative group"
             >
-              <AnimatePresence>
-                {hoveredIndex === index && (
-                  <motion.div
-                    layoutId="serviceBg"
-                    className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20 rounded-2xl"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    style={{ zIndex: -1 }}
-                  />
-                )}
-              </AnimatePresence>
               <ServiceFeatureCard
                 icon={service.icon}
                 title={service.title}
