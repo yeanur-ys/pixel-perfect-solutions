@@ -57,12 +57,12 @@ const ServiceFeatureCard = ({
             </motion.div>
             
             {/* Title */}
-            <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-primary-light transition-colors duration-300">
+            <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
               {title}
             </h3>
             
             {/* Description */}
-            <p className="text-gray-300 mb-6 flex-grow leading-relaxed">
+            <p className="text-muted-foreground mb-6 flex-grow leading-relaxed">
               {description}
             </p>
             
@@ -90,8 +90,8 @@ const ServiceFeatureCard = ({
                 <Sparkles className="h-6 w-6" />
               </motion.div>
               <div>
-                <h4 className="text-xl font-semibold text-white mb-2">{title}</h4>
-                <p className="text-gray-300 leading-relaxed">{detailedDescription}</p>
+                <h4 className="text-xl font-semibold text-foreground mb-2">{title}</h4>
+                <p className="text-muted-foreground leading-relaxed">{detailedDescription}</p>
               </div>
             </div>
             

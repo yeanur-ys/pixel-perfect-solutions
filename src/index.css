@@ -4,36 +4,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 210 40% 98%;
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
     
-    --card: 220 39% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
     
-    --popover: 220 39% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
     
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --primary-light: 217 91% 60%;
-    --primary-dark: 224 76% 48%;
+    --primary: 200 95% 75%;
+    --primary-foreground: 215 25% 15%;
+    --primary-light: 195 100% 85%;
+    --primary-dark: 205 90% 65%;
     
-    --secondary: 215 27% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 215 25% 15%;
     
-    --muted: 215 27% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 215 15% 45%;
     
-    --accent: 260 84% 57%;
-    --accent-foreground: 210 40% 98%;
-    --accent-light: 258 90% 66%;
+    --accent: 165 75% 80%;
+    --accent-foreground: 215 25% 15%;
+    --accent-light: 160 80% 85%;
     
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
     
-    --border: 215 27% 17%;
-    --input: 215 27% 17%;
-    --ring: 221 83% 53%;
+    --border: 220 15% 88%;
+    --input: 220 15% 92%;
+    --ring: 200 95% 75%;
     
     --radius: 0.875rem;
     
@@ -42,17 +42,17 @@
     --gradient-secondary: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-light)) 100%);
     --gradient-radial: radial-gradient(circle at center, hsl(var(--primary) / 0.1) 0%, transparent 70%);
     
-    /* Glass effects */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    /* Glass effects - updated for light theme */
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.3);
+    /* Shadows - softer for light theme */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.2);
   }
 
   * {
@@ -66,11 +66,11 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: black;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-light tracking-tight text-white;
+    @apply font-light tracking-tight text-foreground;
   }
 
   h1 {
@@ -107,7 +107,7 @@
   }
 
   .section-title {
-    @apply text-4xl font-light tracking-tight mb-12 text-center text-white;
+    @apply text-4xl font-light tracking-tight mb-12 text-center text-foreground;
   }
 
   .button-primary {
@@ -115,47 +115,25 @@
     @apply px-6 py-3 text-primary-foreground rounded-full font-medium
            transition-all duration-300 ease-out hover:scale-[1.05] 
            active:scale-[0.95] focus:outline-none focus:ring-2 focus:ring-primary/50 
-           focus:ring-offset-2 focus:ring-offset-black relative overflow-hidden;
+           focus:ring-offset-2 focus:ring-offset-background relative overflow-hidden;
     box-shadow: var(--shadow-md);
-  }
-
-  .button-primary:hover {
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-    transform: translateY(-2px) scale(1.05);
-  }
-
-  .button-primary::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
-  }
-
-  .button-primary:hover::before {
-    opacity: 1;
   }
 
   .button-secondary {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
-    @apply px-6 py-3 text-white rounded-full font-medium
+    @apply px-6 py-3 text-foreground rounded-full font-medium
            transition-all duration-300 ease-out hover:scale-[1.05]
-           active:scale-[0.95] focus:outline-none focus:ring-2 focus:ring-white/30
-           focus:ring-offset-2 focus:ring-offset-black relative overflow-hidden;
+           active:scale-[0.95] focus:outline-none focus:ring-2 focus:ring-primary/30
+           focus:ring-offset-2 focus:ring-offset-background relative overflow-hidden;
     box-shadow: var(--shadow-sm);
   }
 
-  .button-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px) scale(1.05);
-  }
-
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg border border-gray-800 bg-gray-900/50
+    @apply w-full px-4 py-3 rounded-lg border border-border bg-card
            focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-           transition-all duration-200 text-white;
+           transition-all duration-200 text-foreground;
   }
 
   .slide-up {

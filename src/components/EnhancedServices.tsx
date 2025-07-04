@@ -67,7 +67,7 @@ const EnhancedServices = () => {
           <h2 className="text-4xl md:text-5xl font-light mb-6 bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent">
             Digital Solutions That Drive Results
           </h2>
-          <p className="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-muted-foreground max-w-3xl mx-auto text-lg leading-relaxed">
             We combine cutting-edge technology with creative excellence to deliver 
             comprehensive digital solutions that elevate your brand and drive business growth.
           </p>
