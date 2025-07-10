@@ -96,7 +96,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" ref={sectionRef} className="py-24 px-4 md:px-6 bg-black">
+    <section id="contact" ref={sectionRef} className="py-24 px-4 md:px-6 bg-gradient-to-br from-pink-50 via-pink-100 to-rose-50">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -107,10 +107,10 @@ const ContactSection = () => {
           <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
             Get In Touch
           </span>
-          <h2 className="text-3xl md:text-4xl font-light mb-6 text-white">
+          <h2 className="text-3xl md:text-4xl font-light mb-6 text-foreground">
             Let's Start a Conversation
           </h2>
-          <p className="text-gray-400 max-w-3xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
             Have a project in mind? We'd love to hear from you. Fill out the form below 
             and we'll get back to you as soon as possible.
           </p>
@@ -130,8 +130,8 @@ const ContactSection = () => {
                 className="bg-primary/10 rounded-xl p-8 h-full flex flex-col items-center justify-center text-center"
               >
                 <CheckCircle className="h-16 w-16 text-primary mb-4" />
-                <h3 className="text-2xl font-medium text-white mb-2">Thank You!</h3>
-                <p className="text-gray-400 mb-6">Your message has been sent successfully. We'll be in touch soon!</p>
+                <h3 className="text-2xl font-medium text-foreground mb-2">Thank You!</h3>
+                <p className="text-muted-foreground mb-6">Your message has been sent successfully. We'll be in touch soon!</p>
                 <Button 
                   onClick={() => setSubmitSuccess(false)}
                   variant="outline"
@@ -147,11 +147,11 @@ const ContactSection = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-300">Your Name</FormLabel>
+                        <FormLabel className="text-foreground">Your Name</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
-                            className="bg-gray-900 border-gray-700 text-gray-200"
+                            className="glass-card text-foreground"
                             placeholder="John Wick"
                           />
                         </FormControl>
@@ -165,12 +165,12 @@ const ContactSection = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-300">Email Address</FormLabel>
+                        <FormLabel className="text-foreground">Email Address</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             type="email"
-                            className="bg-gray-900 border-gray-700 text-gray-200"
+                            className="glass-card text-foreground"
                             placeholder="johnwick@example.com"
                           />
                         </FormControl>
@@ -184,12 +184,12 @@ const ContactSection = () => {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-300">Your Message</FormLabel>
+                        <FormLabel className="text-foreground">Your Message</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
                             rows={5}
-                            className="w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            className="glass-card text-foreground focus-visible:ring-primary/30"
                             placeholder="Tell us about your project..."
                           />
                         </FormControl>

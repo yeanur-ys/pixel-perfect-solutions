@@ -25,7 +25,7 @@ const WhatsAppButton = ({ phoneNumber, message = "Hello! I'm interested in your 
   return (
     <>
       <motion.div
-        className="w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 cursor-pointer"
+        className="whatsapp-button"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleClick}
@@ -40,25 +40,25 @@ const WhatsAppButton = ({ phoneNumber, message = "Hello! I'm interested in your 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed right-6 bottom-20 w-80 h-auto bg-gray-900 rounded-2xl shadow-2xl z-50 overflow-hidden"
+            className="whatsapp-popup"
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-[#25D366] p-4 text-white font-bold flex justify-between items-center">
+            <div className="whatsapp-popup-header">
               <span>Send us a WhatsApp message</span>
               <motion.div whileHover={{ rotate: 90 }} onClick={() => setIsOpen(false)}>
                 <X size={18} className="cursor-pointer" />
               </motion.div>
             </div>
 
-            <div className="p-4">
-              <p className="text-gray-300 mb-4">
+            <div className="whatsapp-popup-content">
+              <p className="text-primary-foreground mb-4">
                 Send us a message directly to our WhatsApp. We'll get back to you as soon as possible.
               </p>
               <textarea
-                className="w-full p-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+                className="w-full p-3 glass-card text-primary-foreground rounded-lg focus:outline-none focus:ring-1 focus:ring-primary resize-none"
                 rows={4}
                 value={customMessage}
                 onChange={(e) => setCustomMessage(e.target.value)}
@@ -66,7 +66,7 @@ const WhatsAppButton = ({ phoneNumber, message = "Hello! I'm interested in your 
               />
             </div>
 
-            <div className="p-3 border-t border-gray-800 flex items-center justify-end">
+            <div className="whatsapp-popup-footer">
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 className="button-primary flex items-center justify-center"

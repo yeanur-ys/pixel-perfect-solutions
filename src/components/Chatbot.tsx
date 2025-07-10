@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Bot, ChevronRight, AlertCircle, Zap, Cpu, Info, Layers, PenSquare, ExternalLink } from 'lucide-react';
@@ -311,12 +310,6 @@ const Chatbot = () => {
     // Show typing indicator
     setIsTyping(true);
 
-    // Calculate typing delay based on response length (simulate human typing)
-    const getBotResponse = (inputMessage: string): string => {
-      // Use the existing getBotResponse function
-      return getBotResponse(inputMessage);
-    };
-
     // Simulate bot response with dynamic timing
     const botResponse = getBotResponse(inputMessage);
     const typingDelay = Math.min(1000 + botResponse.length * 2, 3000); // Cap at 3 seconds
@@ -353,12 +346,19 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button with improved visual effect */}
       <motion.div
-        className="w-12 h-12 bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden"
-        whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)" }}
+        className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden text-white"
+        style={{
+          background: 'var(--gradient-primary)',
+          boxShadow: 'var(--shadow-medium)'
+        }}
+        whileHover={{ 
+          scale: 1.1, 
+          boxShadow: 'var(--shadow-strong), var(--shadow-glow)'
+        }}
         whileTap={{ scale: 0.9 }}
         onClick={toggleChatbot}
       >
-        <div className="absolute inset-0 bg-blue-600 opacity-20"></div>
+        <div className="absolute inset-0 bg-white/10 opacity-20"></div>
         <AnimatePresence mode="wait">
           {isOpen ? (
             <motion.div
@@ -388,69 +388,69 @@ const Chatbot = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed right-6 bottom-20 w-80 md:w-96 h-[450px] bg-gray-950 rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col border border-blue-900/30"
+            className="chatbot-container"
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            {/* Header with improved design */}
-            <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-4 text-white font-bold flex justify-between items-center relative">
-              <div className="absolute inset-0 bg-blue-600 opacity-10"></div>
-              <div className="flex items-center gap-2 relative">
-                <Bot size={18} />
-                <span>EliteSiteCreation Support</span>
+            <div className="chatbot-header">
+              <div className="flex items-center gap-2">
+                <Bot size={20} />
+                <span>EliteSiteCreation AI</span>
               </div>
               <motion.div 
-                whileHover={{ rotate: 90, scale: 1.1 }} 
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ rotate: 90 }} 
                 onClick={toggleChatbot}
-                className="relative cursor-pointer bg-white/10 rounded-full p-1"
+                className="cursor-pointer"
               >
-                <X size={16} />
+                <X size={18} />
               </motion.div>
             </div>
 
-            {/* Messages area with improved styling */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-gray-950 to-gray-900 scrollbar-thin scrollbar-thumb-blue-800/20 scrollbar-track-transparent">
+            <div className="chatbot-messages">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2 }}
-                  className={`p-3 rounded-xl max-w-[85%] ${
-                    message.sender === 'bot'
-                      ? 'bg-gray-800 text-white rounded-bl-none self-start'
-                      : 'bg-gradient-to-r from-blue-700 to-blue-500 text-white rounded-br-none self-end ml-auto'
-                  }`}
+                  className={`chatbot-message ${message.sender}`}
                 >
                   {formatMessageText(message.text)}
                 </motion.div>
               ))}
 
               {isTyping && (
-                <motion.div 
-                  className="p-3 bg-gray-800 text-white rounded-xl rounded-bl-none self-start max-w-[85%]"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="chatbot-message bot typing flex items-center gap-1"
                 >
-                  <div className="flex space-x-1">
-                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
-                  </div>
+                  <span className="text-sm">AI is typing</span>
+                  {[0, 1, 2].map((i) => (
+                    <motion.div
+                      key={i}
+                      className="w-1.5 h-1.5 bg-primary rounded-full"
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: i * 0.2,
+                      }}
+                    />
+                  ))}
                 </motion.div>
               )}
 
               <div ref={messagesEndRef} />
             </div>
             
-            {/* Quick Replies with improved design and conditionally shown */}
+            {/* Quick Replies */}
             <AnimatePresence>
               {showSuggestions && (
                 <motion.div 
-                  className="p-2 border-t border-gray-800 bg-gray-900 max-h-24 overflow-y-auto"
+                  className="p-2 border-t border-border bg-background/50 max-h-24 overflow-y-auto"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
@@ -461,16 +461,10 @@ const Chatbot = () => {
                       <motion.button
                         key={index}
                         onClick={reply.action}
-                        className="bg-gray-800 hover:bg-gray-700 text-blue-300 px-3 py-1 rounded-lg text-sm flex items-center transition-colors border border-gray-700"
-                        whileHover={{ 
-                          scale: 1.05, 
-                          backgroundColor: "rgba(59, 130, 246, 0.2)",
-                          borderColor: "rgba(59, 130, 246, 0.5)"
-                        }}
-                        whileTap={{ scale: 0.95 }}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05 }}
+                        className="flex items-center gap-2 px-4 py-2 text-white text-sm rounded-lg transition-colors whitespace-nowrap"
+                        style={{ background: 'var(--gradient-primary)' }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         {reply.icon}
                         {reply.text}
@@ -481,23 +475,21 @@ const Chatbot = () => {
               )}
             </AnimatePresence>
 
-            {/* Input area with improved interaction */}
-            <div className="p-3 border-t border-gray-800 flex items-center gap-2 bg-gray-900">
+            <div className="p-3 border-t border-border flex items-center gap-2">
               <input
                 type="text"
-                placeholder="Type your message..."
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="bg-gray-800 text-white p-2 rounded-lg flex-1 border border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-200"
-                onFocus={() => setShowSuggestions(false)}
+                placeholder="Type your message..."
+                className="glass-card text-primary-foreground p-2 rounded-lg flex-1 focus:outline-none focus:ring-1 focus:ring-primary"
               />
               <motion.button
-                whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
-                whileTap={{ scale: 0.9 }}
                 onClick={handleSendMessage}
-                className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-2 rounded-lg transition-colors"
-                disabled={!inputMessage.trim()}
+                className="text-white p-2 rounded-lg hover:opacity-90 transition-colors"
+                style={{ background: 'var(--gradient-primary)' }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Send size={18} />
               </motion.button>

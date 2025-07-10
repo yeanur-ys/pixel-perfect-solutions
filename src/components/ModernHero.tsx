@@ -15,14 +15,14 @@ const ModernHero = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* Hyperrealistic animated background */}
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-pink-50 via-pink-100 to-rose-50">
+      {/* Light baby pink animated background */}
       <div className="absolute inset-0">
         {/* Main gradient backdrop */}
         <div 
-          className="absolute inset-0 opacity-90"
+          className="absolute inset-0 opacity-60"
           style={{
-            background: 'radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15) 0%, rgba(0, 0, 0, 0.9) 70%)'
+            background: 'radial-gradient(ellipse at top, rgba(248, 187, 217, 0.3) 0%, rgba(255, 255, 255, 0.1) 70%)'
           }}
         />
         
@@ -32,22 +32,22 @@ const ModernHero = () => {
             key={i}
             className="absolute rounded-full"
             style={{
-              background: `radial-gradient(circle, rgba(102, 126, 234, ${0.4 + Math.random() * 0.4}) 0%, transparent 70%)`,
-              width: `${20 + Math.random() * 60}px`,
-              height: `${20 + Math.random() * 60}px`,
+              background: `radial-gradient(circle, rgba(248, 187, 217, ${0.4 + Math.random() * 0.4}) 0%, transparent 70%)`,
+              width: `${20 + Math.random() * 40}px`,
+              height: `${20 + Math.random() * 40}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -40 - Math.random() * 20, 0],
-              x: [0, 30 - Math.random() * 60, 0],
-              scale: [1, 1.2 + Math.random() * 0.3, 1],
-              opacity: [0.2, 0.8, 0.1],
+              y: [0, -30 - Math.random() * 15, 0],
+              x: [0, 20 - Math.random() * 40, 0],
+              scale: [1, 1.1 + Math.random() * 0.2, 1],
+              opacity: [0.3, 0.7, 0.2],
             }}
             transition={{
-              duration: 8 + Math.random() * 6,
+              duration: 6 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: Math.random() * 3,
               ease: "easeInOut"
             }}
           />
@@ -57,39 +57,39 @@ const ModernHero = () => {
         <motion.div
           className="absolute pointer-events-none"
           style={{
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%)',
-            left: mousePosition.x - 200,
-            top: mousePosition.y - 200,
+            width: '300px',
+            height: '300px',
+            background: 'radial-gradient(circle, rgba(248, 187, 217, 0.2) 0%, transparent 70%)',
+            left: mousePosition.x - 150,
+            top: mousePosition.y - 150,
           }}
           animate={{ 
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3]
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2]
           }}
-          transition={{ duration: 3, repeat: Infinity }}
+          transition={{ duration: 2, repeat: Infinity }}
         />
         
         {/* Realistic light rays */}
-        <div className="absolute inset-0 opacity-20">
-          {[...Array(5)].map((_, i) => (
+        <div className="absolute inset-0 opacity-15">
+          {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute h-full"
               style={{
-                width: '2px',
-                background: 'linear-gradient(to bottom, transparent, rgba(102, 126, 234, 0.5), transparent)',
-                left: `${20 + i * 20}%`,
+                width: '1px',
+                background: 'linear-gradient(to bottom, transparent, rgba(248, 187, 217, 0.4), transparent)',
+                left: `${25 + i * 20}%`,
                 transformOrigin: 'top center',
               }}
               animate={{
-                rotate: [0, 2, -2, 0],
-                opacity: [0.1, 0.6, 0.1],
+                rotate: [0, 1, -1, 0],
+                opacity: [0.1, 0.4, 0.1],
               }}
               transition={{
-                duration: 4 + i,
+                duration: 3 + i,
                 repeat: Infinity,
-                delay: i * 0.5,
+                delay: i * 0.3,
               }}
             />
           ))}
@@ -112,7 +112,7 @@ const ModernHero = () => {
             className="inline-flex items-center gap-3 px-8 py-4 mb-12 rounded-full glass-card border-2 border-white/20"
           >
             <Star className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm font-bold text-white tracking-wide">PREMIUM DIGITAL EXPERIENCES</span>
+            <span className="text-sm font-bold text-primary-foreground tracking-wide">PREMIUM DIGITAL EXPERIENCES</span>
             <Sparkles className="w-5 h-5 text-blue-400" />
           </motion.div>
           
@@ -123,12 +123,12 @@ const ModernHero = () => {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
           >
-            <span className="text-white">Crafting</span>
+            <span className="text-foreground">Crafting</span>
             <br />
             <span 
               className="bg-clip-text text-transparent font-extrabold"
               style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+                background: 'linear-gradient(135deg, #f8bbd9 0%, #e91e63 50%, #ec4899 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -142,9 +142,9 @@ const ModernHero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="text-xl md:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto leading-relaxed font-light"
+            className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-4xl mx-auto leading-relaxed font-light"
           >
-            We create <span className="text-white font-semibold">hyperrealistic digital experiences</span> that captivate, 
+            We create <span className="text-foreground font-semibold">hyperrealistic digital experiences</span> that captivate, 
             engage, and convert. From AI-powered solutions to stunning visual designs that leave lasting impressions.
           </motion.p>
           
@@ -176,7 +176,7 @@ const ModernHero = () => {
             
             <motion.a
               href="#services"
-              className="button-secondary flex items-center gap-3 px-10 py-5 text-lg font-semibold text-white relative overflow-hidden"
+              className="button-secondary flex items-center gap-3 px-10 py-5 text-lg font-semibold text-primary-foreground relative overflow-hidden"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -233,9 +233,9 @@ const ModernHero = () => {
               />
               
               <stat.icon className={`w-10 h-10 mx-auto mb-4 ${stat.color}`} />
-              <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
-              <div className="text-lg font-semibold text-gray-300 mb-1">{stat.label}</div>
-              <div className="text-sm text-gray-400">{stat.description}</div>
+              <div className="text-4xl font-bold text-foreground mb-2">{stat.value}</div>
+              <div className="text-lg font-semibold text-foreground mb-1">{stat.label}</div>
+              <div className="text-sm text-muted-foreground">{stat.description}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -247,7 +247,7 @@ const ModernHero = () => {
           transition={{ delay: 1.8, duration: 1 }}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         >
-          <span className="text-sm text-gray-400 mb-4 font-medium">Discover Excellence Below</span>
+          <span className="text-sm text-muted-foreground mb-4 font-medium">Discover Excellence Below</span>
           <motion.div
             className="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center p-2 glass-card"
             animate={{ 

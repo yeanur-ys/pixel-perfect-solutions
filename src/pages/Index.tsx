@@ -110,21 +110,28 @@ const Index = () => {
 
           <div className="loading-container">
             <motion.div 
-              className="loading-circle"
+              className="relative flex items-center justify-center w-40 h-40 rounded-full glass-card"
+              style={{
+                background: 'var(--gradient-primary)',
+                boxShadow: 'var(--shadow-glow)'
+              }}
               animate={{ 
                 rotate: 360,
+                scale: [1, 1.05, 1],
                 boxShadow: [
-                  "0 0 20px rgba(248, 187, 217, 0.4)",
-                  "0 0 40px rgba(248, 187, 217, 0.6)",
-                  "0 0 20px rgba(248, 187, 217, 0.4)"
+                  "var(--shadow-glow)",
+                  "var(--shadow-strong), var(--shadow-neon)",
+                  "var(--shadow-glow)"
                 ]
               }}
               transition={{ 
-                rotate: { duration: 10, repeat: Infinity, ease: "linear" },
+                rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
                 boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
               }}
             >
-              <div className="loading-logo">ESC</div>
+              <div className="absolute inset-3 rounded-full bg-background"></div>
+              <div className="relative z-10 text-4xl font-bold text-primary">ESC</div>
             </motion.div>
             
             <motion.h2
@@ -137,8 +144,25 @@ const Index = () => {
             </motion.h2>
             
             <div className="loading-progress-container">
-              <Progress value={loadingProgress} className="h-1 bg-pink-200/50" />
-              <p className="mt-3 text-sm text-center text-pink-700">Loading experience... {loadingProgress}%</p>
+              <div className="w-full bg-pink-200/30 rounded-full h-2 mb-4">
+                <motion.div 
+                  className="h-full rounded-full"
+                  style={{ 
+                    background: 'var(--gradient-primary)',
+                    width: `${loadingProgress}%`
+                  }}
+                  initial={{ width: 0 }}
+                  animate={{ width: `${loadingProgress}%` }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                />
+              </div>
+              <motion.p 
+                className="text-sm text-center text-primary-foreground font-medium"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                Creating Excellence... {loadingProgress}%
+              </motion.p>
             </div>
             
             <div className="loading-particles">
