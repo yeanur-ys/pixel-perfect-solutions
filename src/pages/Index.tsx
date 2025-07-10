@@ -89,17 +89,17 @@ const Index = () => {
           className="loading-screen"
         >
           <div className="website-bg-animation">
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-20">
               {[...Array(50)].map((_, i) => (
                 <div 
                   key={i}
-                  className="absolute rounded-full bg-blue-600"
+                  className="absolute rounded-full bg-pink-300"
                   style={{
                     top: `${Math.random() * 100}%`,
                     left: `${Math.random() * 100}%`,
                     width: `${Math.random() * 6 + 1}px`,
                     height: `${Math.random() * 6 + 1}px`,
-                    opacity: Math.random() * 0.5 + 0.3,
+                    opacity: Math.random() * 0.4 + 0.2,
                     animation: `pulse-animation ${Math.random() * 4 + 3}s infinite alternate`,
                     animationDelay: `${Math.random() * 3}s`
                   }}
@@ -114,9 +114,9 @@ const Index = () => {
               animate={{ 
                 rotate: 360,
                 boxShadow: [
-                  "0 0 20px rgba(59, 130, 246, 0.3)",
-                  "0 0 40px rgba(59, 130, 246, 0.5)",
-                  "0 0 20px rgba(59, 130, 246, 0.3)"
+                  "0 0 20px rgba(248, 187, 217, 0.4)",
+                  "0 0 40px rgba(248, 187, 217, 0.6)",
+                  "0 0 20px rgba(248, 187, 217, 0.4)"
                 ]
               }}
               transition={{ 
@@ -137,8 +137,8 @@ const Index = () => {
             </motion.h2>
             
             <div className="loading-progress-container">
-              <Progress value={loadingProgress} className="h-1 bg-blue-900/30" />
-              <p className="mt-3 text-sm text-center text-blue-200">Loading experience... {loadingProgress}%</p>
+              <Progress value={loadingProgress} className="h-1 bg-pink-200/50" />
+              <p className="mt-3 text-sm text-center text-pink-700">Loading experience... {loadingProgress}%</p>
             </div>
             
             <div className="loading-particles">
@@ -175,27 +175,27 @@ const Index = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="min-h-screen bg-black text-foreground overflow-hidden"
+          className="min-h-screen bg-background text-foreground overflow-hidden"
         >
           <div className="website-bg-animation">
-            <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 opacity-20">
               {[...Array(50)].map((_, i) => (
                 <div 
                   key={i}
-                  className="absolute rounded-full bg-blue-600"
+                  className="absolute rounded-full bg-pink-300"
                   style={{
                     top: `${Math.random() * 100}%`,
                     left: `${Math.random() * 100}%`,
                     width: `${Math.random() * 6 + 1}px`,
                     height: `${Math.random() * 6 + 1}px`,
-                    opacity: Math.random() * 0.5 + 0.3,
+                    opacity: Math.random() * 0.4 + 0.2,
                     animation: `pulse-animation ${Math.random() * 4 + 3}s infinite alternate`,
                     animationDelay: `${Math.random() * 3}s`
                   }}
                 />
               ))}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950/30 to-black opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 via-pink-100/30 to-pink-50/50 opacity-60" />
           </div>
           
           <Navbar />

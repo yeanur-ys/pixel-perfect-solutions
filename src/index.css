@@ -4,53 +4,53 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 340 100% 98%;
+    --foreground: 340 15% 25%;
     
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 340 50% 97%;
+    --card-foreground: 340 15% 25%;
     
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 340 50% 97%;
+    --popover-foreground: 340 15% 25%;
     
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary: 320 60% 85%;
+    --primary-foreground: 340 90% 10%;
     
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 330 40% 90%;
+    --secondary-foreground: 340 20% 30%;
     
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 330 30% 92%;
+    --muted-foreground: 340 20% 50%;
     
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 325 50% 88%;
+    --accent-foreground: 340 25% 25%;
     
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 340 100% 98%;
     
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 330 25% 85%;
+    --input: 330 30% 92%;
+    --ring: 320 60% 85%;
     
     --radius: 0.5rem;
     
-    /* Hyperrealistic gradients */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    --gradient-dark: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+    /* Light baby pink gradients */
+    --gradient-primary: linear-gradient(135deg, #f8bbd9 0%, #e91e63 100%);
+    --gradient-secondary: linear-gradient(135deg, #fce4ec 0%, #f48fb1 100%);
+    --gradient-accent: linear-gradient(135deg, #f3e5ff 0%, #e1bee7 100%);
+    --gradient-light: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
     
-    /* Realistic glass effects */
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    /* Glass effects for light theme */
+    --glass-bg: rgba(248, 187, 217, 0.15);
+    --glass-border: rgba(248, 187, 217, 0.25);
+    --glass-shadow: 0 8px 32px rgba(248, 187, 217, 0.3);
     
-    /* Professional shadows */
-    --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.12);
-    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.15);
-    --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.2);
-    --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.4);
-    --shadow-neon: 0 0 20px rgba(102, 126, 234, 0.6);
+    /* Soft shadows for light theme */
+    --shadow-soft: 0 2px 10px rgba(248, 187, 217, 0.2);
+    --shadow-medium: 0 8px 25px rgba(248, 187, 217, 0.25);
+    --shadow-strong: 0 15px 35px rgba(248, 187, 217, 0.3);
+    --shadow-glow: 0 0 40px rgba(248, 187, 217, 0.4);
+    --shadow-neon: 0 0 20px rgba(248, 187, 217, 0.6);
   }
 
   * {
@@ -64,7 +64,7 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: var(--gradient-dark);
+    background: var(--gradient-light);
     overflow-x: hidden;
   }
 
@@ -87,7 +87,7 @@
 
 @layer components {
   .hero-gradient {
-    @apply absolute inset-0 bg-gradient-to-b from-background via-gray-900 to-transparent opacity-90 z-10;
+    @apply absolute inset-0 bg-gradient-to-b from-background via-pink-50 to-transparent opacity-90 z-10;
   }
 
   .glass-card {
@@ -100,8 +100,8 @@
   }
 
   .glass-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(102, 126, 234, 0.4);
+    background: rgba(248, 187, 217, 0.25);
+    border-color: rgba(248, 187, 217, 0.4);
     box-shadow: var(--shadow-strong), var(--shadow-glow);
     transform: translateY(-2px);
   }
@@ -116,7 +116,7 @@
            transition-all duration-300 ease-out hover:scale-[1.02] 
            active:scale-[0.98] focus:outline-none relative overflow-hidden;
     box-shadow: var(--shadow-medium);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(248, 187, 217, 0.3);
   }
 
   .button-primary:hover {
@@ -125,18 +125,18 @@
   }
 
   .button-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(248, 187, 217, 0.15);
+    border: 1px solid rgba(248, 187, 217, 0.3);
     backdrop-filter: blur(15px);
-    @apply px-8 py-4 text-white rounded-lg font-medium
+    @apply px-8 py-4 text-primary-foreground rounded-lg font-medium
            transition-all duration-300 ease-out hover:scale-[1.02]
            active:scale-[0.98] focus:outline-none relative overflow-hidden;
     box-shadow: var(--shadow-soft);
   }
 
   .button-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(102, 126, 234, 0.5);
+    background: rgba(248, 187, 217, 0.25);
+    border-color: rgba(248, 187, 217, 0.5);
     box-shadow: var(--shadow-medium);
     transform: translateY(-2px);
   }
@@ -211,7 +211,7 @@
   }
 
   .loading-screen {
-    @apply fixed inset-0 flex items-center justify-center bg-black z-[9999];
+    @apply fixed inset-0 flex items-center justify-center bg-background z-[9999];
   }
 
   .loading-container {
@@ -220,21 +220,21 @@
 
   .loading-circle {
     @apply relative flex items-center justify-center w-36 h-36 rounded-full;
-    background: linear-gradient(135deg, #1e40af, #3b82f6);
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    background: linear-gradient(135deg, #f8bbd9, #e91e63);
+    box-shadow: 0 0 30px rgba(248, 187, 217, 0.6);
   }
 
   .loading-circle::before {
     content: '';
-    @apply absolute inset-2 rounded-full bg-black;
+    @apply absolute inset-2 rounded-full bg-background;
   }
 
   .loading-logo {
-    @apply relative z-10 text-4xl font-bold text-white;
+    @apply relative z-10 text-4xl font-bold text-primary-foreground;
   }
 
   .loading-text {
-    @apply mt-4 text-white text-lg font-light;
+    @apply mt-4 text-foreground text-lg font-light;
   }
 
   .loading-progress-container {
@@ -242,11 +242,11 @@
   }
 
   .loading-progress {
-    @apply bg-blue-900/30 rounded-full overflow-hidden;
+    @apply bg-pink-200/50 rounded-full overflow-hidden;
   }
 
   .loading-progress-bar {
-    @apply h-1 bg-gradient-to-r from-blue-700 to-blue-400;
+    @apply h-1 bg-gradient-to-r from-pink-400 to-pink-600;
   }
 
   .loading-particles {
