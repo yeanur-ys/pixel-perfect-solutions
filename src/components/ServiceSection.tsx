@@ -55,7 +55,7 @@ const ServiceSection = ({
           transition={{ duration: 0.7, delay: 0.2 }}
           className="w-full lg:w-1/2"
         >
-          <div className="aspect-video w-full h-full rounded-2xl overflow-hidden">
+          <div className="aspect-video w-full h-full rounded-2xl overflow-hidden border-2 border-primary/20 shadow-elegant">
             <Slideshow images={images} />
           </div>
         </motion.div>
@@ -66,15 +66,15 @@ const ServiceSection = ({
           transition={{ duration: 0.7, delay: 0.3 }}
           className="w-full lg:w-1/2"
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-blue-700/10 text-blue-400">
+          <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium rounded-full bg-primary/10 text-primary">
             {subtitle}
           </span>
           
-          <h3 className="text-2xl md:text-3xl font-light mb-4">
+          <h3 className="text-2xl md:text-3xl font-light mb-4 text-primary">
             {title}
           </h3>
           
-          <p className="text-foreground/80 mb-8 text-lg">
+          <p className="text-primary/80 mb-8 text-lg">
             {description}
           </p>
           

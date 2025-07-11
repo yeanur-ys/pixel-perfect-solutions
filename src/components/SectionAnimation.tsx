@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
@@ -142,10 +141,10 @@ const SectionAnimation = ({ id, color = '#1e40af', particleCount = 100 }: Sectio
   return (
     <div 
       ref={containerRef} 
-      className="absolute inset-0 -z-10 opacity-30 pointer-events-none h-32" 
+      className="absolute inset-0 -z-10 opacity-20 pointer-events-none" 
       aria-hidden="true"
       id={`section-animation-${id}`}
-      style={{ height: '120px' }}
+      style={{ height: '300px', top: '-150px' }}
     ></div>
   );
 };

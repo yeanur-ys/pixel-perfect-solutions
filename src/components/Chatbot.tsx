@@ -346,7 +346,7 @@ const Chatbot = () => {
     <>
       {/* Chatbot Toggle Button with improved visual effect */}
       <motion.div
-        className="fixed bottom-6 right-20 w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden text-white z-50"
+        className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden text-white"
         style={{
           background: 'var(--gradient-primary)',
           boxShadow: 'var(--shadow-medium)'

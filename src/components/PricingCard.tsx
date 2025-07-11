@@ -37,10 +37,14 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
         scale: 1.02,
         transition: { duration: 0.4 } 
       }}
-      className={`glass-card p-10 flex flex-col h-full relative overflow-hidden group ${
-        isPremium ? 'border-2 border-purple-400/30' : 
-        isPopular ? 'border-2 border-blue-400/30' : 'border border-white/10'
+      className={`glass-card p-10 flex flex-col h-full relative overflow-hidden group border-2 ${
+        isPremium ? 'border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10' : 
+        isPopular ? 'border-primary/40 bg-gradient-to-br from-primary/10 to-primary/15' : 
+        'border-primary/20 bg-gradient-to-br from-background/50 to-primary/5'
       }`}
+      style={{
+        boxShadow: isPremium || isPopular ? 'var(--shadow-elegant)' : 'var(--shadow-medium)'
+      }}
     >
       {/* Background glow effect */}
       <motion.div
@@ -87,20 +91,11 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
       )}
       
       <div className="mb-8 relative z-10">
-        <h3 className="text-2xl font-bold mb-4 text-white">{title}</h3>
-        <div className="text-5xl font-bold mb-2"
-             style={{
-               background: isPremium 
-                 ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-                 : isPopular
-                 ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                 : 'linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%)',
-               WebkitBackgroundClip: 'text',
-               WebkitTextFillColor: 'transparent',
-             }}>
+        <h3 className="text-2xl font-bold mb-4 text-primary">{title}</h3>
+        <div className="text-5xl font-bold mb-2 text-primary">
           {price}
         </div>
-        <div className="text-sm text-gray-400 font-medium">One-time investment</div>
+        <div className="text-sm text-primary/70 font-medium">One-time investment</div>
       </div>
       
       <ul className="space-y-4 mb-10 flex-grow relative z-10">
@@ -112,17 +107,10 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
             animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 + i * 0.1 }}
           >
-            <span className="mr-3 mt-0.5 p-1 rounded-full"
-                  style={{
-                    background: isPremium 
-                      ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-                      : isPopular
-                      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                      : 'linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%)',
-                  }}>
-              <Check size={14} className="text-black" />
+            <span className="mr-3 mt-0.5 p-1 rounded-full bg-primary/20">
+              <Check size={14} className="text-primary" />
             </span>
-            <span className="text-gray-300 font-medium">{feature}</span>
+            <span className="text-primary/80 font-medium">{feature}</span>
           </motion.li>
         ))}
       </ul>
@@ -130,17 +118,7 @@ const PricingCard = ({ title, price, features, index }: PricingCardProps) => {
       <motion.button
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.02 }}
-        className={`w-full mt-auto py-4 px-8 rounded-lg font-bold text-lg transition-all duration-400 relative overflow-hidden ${
-          isPremium || isPopular ? 'text-white' : 'text-black'
-        }`}
-        style={{
-          background: isPremium 
-            ? 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-            : isPopular
-            ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-            : 'linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%)',
-          boxShadow: isPremium || isPopular ? '0 10px 25px rgba(0, 0, 0, 0.2)' : '0 5px 15px rgba(0, 0, 0, 0.1)'
-        }}
+        className="button-primary w-full mt-auto py-4 px-8 font-bold text-lg"
         onClick={handleGetStarted}
       >
         <Star className="w-5 h-5 inline mr-2" />

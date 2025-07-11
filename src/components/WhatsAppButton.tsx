@@ -25,7 +25,11 @@ const WhatsAppButton = ({ phoneNumber, message = "Hello! I'm interested in your 
   return (
     <>
       <motion.div
-        className="whatsapp-button"
+        className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative overflow-hidden text-white"
+        style={{
+          background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+          boxShadow: 'var(--shadow-medium)'
+        }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleClick}
@@ -39,37 +43,41 @@ const WhatsAppButton = ({ phoneNumber, message = "Hello! I'm interested in your 
       {/* WhatsApp Popup */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            className="whatsapp-popup"
+           <motion.div
+            className="fixed bottom-20 right-6 w-80 glass-card rounded-2xl overflow-hidden z-40"
+            style={{ 
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)',
+              border: '1px solid rgba(248, 165, 194, 0.3)',
+              boxShadow: 'var(--shadow-elegant)'
+            }}
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="whatsapp-popup-header">
-              <span>Send us a WhatsApp message</span>
+            <div className="p-4 flex justify-between items-center" style={{ background: 'var(--gradient-primary)' }}>
+              <span className="text-white font-semibold">Send us a WhatsApp message</span>
               <motion.div whileHover={{ rotate: 90 }} onClick={() => setIsOpen(false)}>
-                <X size={18} className="cursor-pointer" />
+                <X size={18} className="cursor-pointer text-white" />
               </motion.div>
             </div>
 
-            <div className="whatsapp-popup-content">
-              <p className="text-primary-foreground mb-4">
+            <div className="p-5">
+              <p className="text-primary mb-4">
                 Send us a message directly to our WhatsApp. We'll get back to you as soon as possible.
               </p>
               <textarea
-                className="w-full p-3 glass-card text-primary-foreground rounded-lg focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+                className="w-full p-3 glass-card text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none bg-white/50"
                 rows={4}
                 value={customMessage}
                 onChange={(e) => setCustomMessage(e.target.value)}
                 placeholder="Type your message here..."
               />
-            </div>
-
-            <div className="whatsapp-popup-footer">
+              
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                className="button-primary flex items-center justify-center"
+                className="button-primary w-full flex items-center justify-center mt-4"
                 onClick={handleSend}
               >
                 Send Message <Send className="ml-2 h-4 w-4" />

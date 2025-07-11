@@ -12,6 +12,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import Chatbot from '@/components/Chatbot';
 import CursorEffect from '@/components/CursorEffect';
 import SectionAnimation from '@/components/SectionAnimation';
+import ThreeScene from '@/components/ThreeScene';
 import { Progress } from '@/components/ui/progress';
 import AnimatedButton from '@/components/AnimatedButton';
 
@@ -226,65 +227,76 @@ const Index = () => {
           <ModernHero />
           
           <div className="relative">
-            <SectionAnimation id="services" color="#1e40af" />
+            <ThreeScene color="#f8a5c2" intensity={0.2} />
             <EnhancedServices />
           </div>
           
           <div className="relative">
-            <SectionAnimation id="web-development" color="#1e3a8a" />
+            <ThreeScene color="#f093fb" intensity={0.3} />
             <Services />
           </div>
           
-          <ServiceSection 
-            id="maintenance"
-            title="Website Maintenance"
-            subtitle="Keep Your Site Fresh"
-            description="Focus on your business while we ensure your website stays updated, secure, and optimized for performance. Our maintenance services include regular updates, security monitoring, content management, and performance optimization."
-            images={maintenanceImages}
-            animationColor="#1e65af"
-          />
-          
-          <ServiceSection 
-            id="ai-ml"
-            title="AI & ML Solutions"
-            subtitle="Future-Proof Technology"
-            description="Leverage AI and Machine Learning to gain actionable insights, automate tasks, and enhance decision-making for your business. Our AI solutions are tailored to your specific needs and designed to give you a competitive edge."
-            images={aiImages}
-            reversed
-            animationColor="#1e40af"
-          />
-          
-          <ServiceSection 
-            id="gfx"
-            title="GFX Design"
-            subtitle="Visual Excellence"
-            description="Enhance your brand with cutting-edge graphic design that creates an immersive experience for your audience. Our GFX design services include branding, UI/UX design, illustration, and motion graphics."
-            images={gfxImages}
-            animationColor="#2d3a8c"
-          />
-          
-          <ServiceSection 
-            id="vfx"
-            title="VFX Design"
-            subtitle="Motion Magic"
-            description="Transform your visuals with stunning visual effects that captivate and engage your audience. Our VFX design services include compositing, 3D animation, particle effects, and more."
-            images={vfxImages}
-            reversed
-            animationColor="#1e3a8a"
-          />
+          <div className="relative">
+            <ThreeScene color="#fbbf24" intensity={0.25} />
+            <ServiceSection 
+              id="maintenance"
+              title="Website Maintenance"
+              subtitle="Keep Your Site Fresh"
+              description="Focus on your business while we ensure your website stays updated, secure, and optimized for performance. Our maintenance services include regular updates, security monitoring, content management, and performance optimization."
+              images={maintenanceImages}
+              animationColor="#1e65af"
+            />
+          </div>
           
           <div className="relative">
-            <SectionAnimation id="contact" color="#3b82f6" />
+            <ThreeScene color="#a78bfa" intensity={0.3} />
+            <ServiceSection 
+              id="ai-ml"
+              title="AI & ML Solutions"
+              subtitle="Future-Proof Technology"
+              description="Leverage AI and Machine Learning to gain actionable insights, automate tasks, and enhance decision-making for your business. Our AI solutions are tailored to your specific needs and designed to give you a competitive edge."
+              images={aiImages}
+              reversed
+              animationColor="#1e40af"
+            />
+          </div>
+          
+          <div className="relative">
+            <ThreeScene color="#fb7185" intensity={0.25} />
+            <ServiceSection 
+              id="gfx"
+              title="GFX Design"
+              subtitle="Visual Excellence"
+              description="Enhance your brand with cutting-edge graphic design that creates an immersive experience for your audience. Our GFX design services include branding, UI/UX design, illustration, and motion graphics."
+              images={gfxImages}
+              animationColor="#2d3a8c"
+            />
+          </div>
+          
+          <div className="relative">
+            <ThreeScene color="#10b981" intensity={0.3} />
+            <ServiceSection 
+              id="vfx"
+              title="VFX Design"
+              subtitle="Motion Magic"
+              description="Transform your visuals with stunning visual effects that captivate and engage your audience. Our VFX design services include compositing, 3D animation, particle effects, and more."
+              images={vfxImages}
+              reversed
+              animationColor="#1e3a8a"
+            />
+          </div>
+          
+          <div className="relative">
+            <ThreeScene color="#f8a5c2" intensity={0.2} />
             <ContactSection />
           </div>
           
           <Footer />
           
           <div className="fixed bottom-6 right-6 flex items-center gap-4 z-50">
+            <Chatbot />
             <WhatsAppButton phoneNumber={phoneNumber} />
           </div>
-          
-          <Chatbot />
           
           <CursorEffect />
           
