@@ -142,9 +142,10 @@ const SectionAnimation = ({ id, color = '#1e40af', particleCount = 100 }: Sectio
   return (
     <div 
       ref={containerRef} 
-      className="absolute inset-0 -z-10 opacity-50 pointer-events-none" 
+      className="absolute inset-0 -z-10 opacity-30 pointer-events-none h-32" 
       aria-hidden="true"
       id={`section-animation-${id}`}
+      style={{ height: '120px' }}
     ></div>
   );
 };

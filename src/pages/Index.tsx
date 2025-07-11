@@ -282,8 +282,9 @@ const Index = () => {
           
           <div className="fixed bottom-6 right-6 flex items-center gap-4 z-50">
             <WhatsAppButton phoneNumber={phoneNumber} />
-            <Chatbot />
           </div>
+          
+          <Chatbot />
           
           <CursorEffect />
           
