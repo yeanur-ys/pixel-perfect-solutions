@@ -44,20 +44,17 @@ const EnhancedServices = () => {
     <section 
       id="services" 
       ref={sectionRef} 
-      className="py-24 px-4 md:px-6 relative overflow-hidden"
-      style={{
-        background: 'radial-gradient(ellipse at center, rgba(102, 126, 234, 0.05) 0%, transparent 70%)'
-      }}
+      className="py-24 px-4 md:px-6 relative overflow-hidden glass-card"
     >
       {/* Enhanced background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10"
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20"
              style={{
-               background: 'radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%)'
+               background: 'radial-gradient(circle, rgba(248, 187, 217, 0.4) 0%, transparent 70%)'
              }} />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-10"
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-20"
              style={{
-               background: 'radial-gradient(circle, rgba(240, 147, 251, 0.3) 0%, transparent 70%)'
+               background: 'radial-gradient(circle, rgba(248, 187, 217, 0.3) 0%, transparent 70%)'
              }} />
       </div>
       
@@ -69,22 +66,17 @@ const EnhancedServices = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.span 
-            className="inline-block px-8 py-4 mb-10 text-sm font-bold rounded-full glass-card border-2 border-white/20 text-white tracking-wide"
+            className="inline-block px-8 py-4 mb-10 text-sm font-bold rounded-full glass-card border-2 text-primary-foreground tracking-wide"
             initial={{ scale: 0.8 }}
             animate={isVisible ? { scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             ⚡ COMPREHENSIVE DIGITAL SERVICES ⚡
           </motion.span>
-          <h2 className="text-5xl md:text-6xl font-bold mb-8 text-transparent bg-clip-text"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
+          <h2 className="text-5xl md:text-6xl font-bold mb-8 text-primary-foreground">
             Transformative Digital Solutions
           </h2>
-          <p className="text-gray-300 max-w-4xl mx-auto text-xl leading-relaxed font-light">
+          <p className="text-muted-foreground max-w-4xl mx-auto text-xl leading-relaxed font-light">
             We deliver cutting-edge digital experiences that combine stunning aesthetics with 
             powerful functionality, designed to elevate your brand and captivate your audience.
           </p>

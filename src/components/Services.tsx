@@ -51,15 +51,12 @@ const Services = () => {
   const isVisible = useScrollAnimation(sectionRef, 'fade-in');
   
   return (
-    <section id="web-development" ref={sectionRef} className="py-24 px-4 md:px-6 relative overflow-hidden"
-             style={{
-               background: 'radial-gradient(ellipse at center, rgba(240, 147, 251, 0.03) 0%, transparent 70%)'
-             }}>
+    <section id="web-development" ref={sectionRef} className="py-24 px-4 md:px-6 relative overflow-hidden glass-card">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full opacity-5"
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full opacity-20"
              style={{
-               background: 'radial-gradient(circle, rgba(240, 147, 251, 0.4) 0%, transparent 70%)'
+               background: 'radial-gradient(circle, rgba(248, 187, 217, 0.4) 0%, transparent 70%)'
              }} />
       </div>
       
@@ -71,22 +68,17 @@ const Services = () => {
           className="text-center mb-20"
         >
           <motion.span 
-            className="inline-block px-8 py-4 mb-10 text-sm font-bold rounded-full glass-card border-2 border-white/20 text-white tracking-wide"
+            className="inline-block px-8 py-4 mb-10 text-sm font-bold rounded-full glass-card border-2 text-primary-foreground tracking-wide"
             initial={{ scale: 0.8 }}
             animate={isVisible ? { scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             💼 PREMIUM WEB DEVELOPMENT 💼
           </motion.span>
-          <h2 className="text-5xl md:text-6xl font-bold mb-8 text-transparent bg-clip-text"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
+          <h2 className="text-5xl md:text-6xl font-bold mb-8 text-primary-foreground">
             Professional Websites That Convert
           </h2>
-          <p className="text-gray-300 max-w-4xl mx-auto text-xl leading-relaxed font-light">
+          <p className="text-muted-foreground max-w-4xl mx-auto text-xl leading-relaxed font-light">
             Transform your business with stunning, responsive websites built for performance, 
             conversions, and exceptional user experiences across all devices.
           </p>

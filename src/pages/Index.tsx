@@ -297,13 +297,13 @@ const Index = () => {
                 onClick={() => setShowWhatsApp(false)}
               >
                 <motion.div
-                  className="w-96 bg-gray-900 rounded-2xl overflow-hidden"
+                  className="w-96 glass-card rounded-2xl overflow-hidden"
                   initial={{ scale: 0.9, y: 20 }}
                   animate={{ scale: 1, y: 0 }}
                   exit={{ scale: 0.9, y: 20 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="p-4 bg-gradient-to-r from-blue-600 to-blue-400 flex justify-between items-center">
+                  <div className="p-4 flex justify-between items-center" style={{ background: 'var(--gradient-primary)' }}>
                     <h3 className="text-white font-semibold">Get Started with EliteSiteCreation</h3>
                     <X 
                       className="text-white cursor-pointer" 
@@ -312,7 +312,7 @@ const Index = () => {
                     />
                   </div>
                   <div className="p-5">
-                    <p className="text-gray-300 mb-4">
+                    <p className="text-primary-foreground mb-4">
                       Thank you for your interest in our services! Tell us more about your project and we'll get back to you as soon as possible.
                     </p>
                     
